@@ -6,7 +6,7 @@
   
       public BankingApp() {
           JFrame frame = new JFrame("My First Bank App");
-          frame.setSize(300, 400);
+          frame.setSize(400, 400);
           frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
           frame.setLayout(null);
   
