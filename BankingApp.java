@@ -42,6 +42,7 @@
                 }
                 balance -= Double.parseDouble(input.getText());
                 label.setText("Balance: $" + balance);
+                input.setText("");
             } catch (Exception ex) {
                 System.out.println("Invalid input!");
             };
