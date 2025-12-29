@@ -22,7 +22,7 @@
           depositBtn.setBounds(50, 110, 100, 30);
           frame.add(depositBtn);
   
-          depositBtn.addActionListener(e -> {
+   depositBtn.addActionListener(e -> {
               try {
                   double amount = Double.parseDouble(input.getText());
                   
@@ -34,6 +34,18 @@
                   JOptionPane.showMessageDialog(frame, "Please enter a number!");
               }
           });
+  withdrawBtn.addActionListener(event->{
+            try {
+                if(balance<=0){
+                    JOptionPane.showMessageDialog(frame, "Balance can't be negative!");
+                    balance=0;
+                }
+                balance -= Double.parseDouble(input.getText());
+                label.setText("Balance: $" + balance);
+            } catch (Exception ex) {
+                System.out.println("Invalid input!");
+            };
+        });;
   
           frame.setVisible(true);
       }
