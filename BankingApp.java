@@ -1,15 +1,23 @@
   import javax.swing.*;
   import java.awt.event.*;
-  
+  import java.time.*;
+  import java.time.format.DateTimeFormatter;
+
   public class BankingApp {
       private double balance = 0.0;
+      private DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
   
       public BankingApp() {
           JFrame frame = new JFrame("My First Bank App");
           frame.setSize(400, 400);
           frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
           frame.setLayout(null);
-  
+
+            String currentTime = dtf.format(LocalDateTime.now());
+            JLabel timeLabel = new JLabel("Time: "+currentTime);
+            timeLabel.setBounds(250, 20, 200, 10);
+            frame.add(timeLabel);
+        
           JLabel label = new JLabel("Balance: $0.0");
           label.setBounds(50, 30, 200, 30);
           frame.add(label);
