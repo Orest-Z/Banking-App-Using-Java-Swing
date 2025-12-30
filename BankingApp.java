@@ -36,11 +36,12 @@
           });
   withdrawBtn.addActionListener(event->{
             try {
-                if(balance<=0){
-                    JOptionPane.showMessageDialog(frame, "Balance can't be negative!");
-                    balance=0;
+               double ammount = Double.parseDouble(input.getText());
+                if (ammount<=balance) {
+                    balance -= ammount;
+                }else {
+                    JOptionPane.showMessageDialog(frame, "Balance is too low!");
                 }
-                balance -= Double.parseDouble(input.getText());
                 label.setText("Balance: $" + balance);
                 input.setText("");
             } catch (Exception ex) {
