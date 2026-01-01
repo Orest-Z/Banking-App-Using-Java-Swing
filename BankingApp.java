@@ -8,7 +8,7 @@
       private DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
   
       public BankingApp() {
-          JFrame frame = new JFrame("My First Bank App");
+          JFrame frame = new JFrame("Banking App v1.4");
           frame.setSize(400, 400);
           frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
           frame.setLayout(null);
@@ -29,13 +29,25 @@
           JButton depositBtn = new JButton("Deposit");
           depositBtn.setBounds(50, 110, 100, 30);
           frame.add(depositBtn);
-  
-   depositBtn.addActionListener(e -> {
+
+          JLabel historyTitle = new JLabel("Transaction History:");
+          historyTitle.setBounds(50, 200, 200, 30);
+          frame.add(historyTitle);
+
+          JTextArea historyLog = new JTextArea();
+          historyLog.setEditable(false); 
+          historyLog.setFont(new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 12)); 
+
+          JScrollPane scrollPane = new JScrollPane(historyLog);
+          scrollPane.setBounds(50, 200, 300, 160);
+          frame.add(scrollPane);
+        
+     depositBtn.addActionListener(e -> {
               try {
                   double amount = Double.parseDouble(input.getText());
                   
                   balance += amount; 
-                  
+                  historyLog.append("[" + currentTime + "] Deposited: $" + amount + "\n");
                   label.setText("Balance: $" + balance);
                   input.setText(""); 
               } catch (Exception ex) {
@@ -47,6 +59,7 @@
                double ammount = Double.parseDouble(input.getText());
                 if (ammount<=balance) {
                     balance -= ammount;
+                    historyLog.append("[" + currentTime + "] Withdrew: $" + ammount + "\n");
                 }else {
                     JOptionPane.showMessageDialog(frame, "Balance is too low!");
                 }
