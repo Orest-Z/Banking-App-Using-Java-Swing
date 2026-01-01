@@ -7,6 +7,8 @@
         user cannot withdraw any money which exceeds the balance amount.\
 **DAY 3:** Today i decided to improve further more the logic of the app some of the core functions of the withdraw button which does not allow the user to withdraw more money
        than the balance it currently has and it shows a dialog box using the command: JOptionPane.showMessageDialog(frame, "Balance is too low!");
-       Also learned about the time library and also java.time.format.DateTimeFormatter; . Using these two libraries i managed to show a label text on the top right of my app          which contained the current date and time.My future plan for tomorrow is to implement a history log taking advantage of the specific time and date libraries i used so          that each transaction is shown alongside the time it happened.
+       Also learned about the time library and also java.time.format.DateTimeFormatter; . Using these two libraries i managed to show a label text on the top right of my app          which contained the current date and time.My future plan for tomorrow is to implement a history log taking advantage of the specific time and date libraries i used so          that each transaction is shown alongside the time it happened.\
 **DAY 4:** Today i created a history log which shows the exact real time a transaction happened.I created a label for the history log and also used JScrollPane to make it
-       possible to scroll down until the end of the transactions history.
+       possible to scroll down until the end of the transactions history.I realized that the time was not moving and stayed the same as the first time the application started.
+       That so happened because i belive it treats the time date format as a string and does not continue to update it in real time,so my next step is to correct this bug and
+       make it fully funcionable.
