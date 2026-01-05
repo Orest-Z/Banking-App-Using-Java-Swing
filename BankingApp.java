@@ -8,7 +8,7 @@ public class BankingApp {
     private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
     public BankingApp() {
-        JFrame frame = new JFrame("Banking App v1.4");
+        JFrame frame = new JFrame("Banking App v1.5");
         frame.setSize(450, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
