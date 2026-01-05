@@ -11,4 +11,5 @@
 **DAY 4:** Today i created a history log which shows the exact real time a transaction happened.I created a label for the history log and also used JScrollPane to make it
        possible to scroll down until the end of the transactions history.I realized that the time was not moving and stayed the same as the first time the application started.
        That so happened because i belive it treats the time date format as a string and does not continue to update it in real time,so my next step is to correct this bug and
-       make it fully funcionable.
+       make it fully funcionable.\
+**DAY 5** I coorected the bug of time showing wrong after a deposit or withdrawal. Also resized the window and made it a bit bigger to be able to show all history of transacions. Using a funcition of the timer class public void actionPerformed, we will be able to update the time each second giving us a more up to date value.
