@@ -41,6 +41,10 @@ public class BankingApp {
         withdrawBtn.setBounds(160, 110, 100, 30);
         frame.add(withdrawBtn);
 
+        JButton DownloadHistory = new JButton("Download History");
+        DownloadHistory.setBounds(270, 110, 150, 30);
+        frame.add(DownloadHistory);
+
         JLabel historyTitle = new JLabel("Transaction History:");
         historyTitle.setBounds(50, 170, 200, 30);
         frame.add(historyTitle);
