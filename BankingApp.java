@@ -89,6 +89,26 @@ public class BankingApp {
             }
         });
 
+    DownloadHistory.addActionListener(e->{
+        try {
+            FileWriter fw=new Filewriter();
+            PrintWriter pw=new PrintWriter(fw);
+                pw.println("==================================");
+                pw.println("      OFFICIAL BANK STATEMENT     ");
+                pw.println("      Date: " + java.time.LocalDateTime.now());
+                pw.println("==================================");
+                pw.println("");
+                pw.print(historyLog.getText());
+                pw.close();
+                fw.close();
+                JOptionPane.showMessageDialog(frame, "Bank Statement has been downloaded!");
+            }catch(Exception ex){
+                JOptionPane.showMessageDialog(frame, ex.getMessage());
+            }
+        });
+
+            
+
         frame.setVisible(true);
     }
 
