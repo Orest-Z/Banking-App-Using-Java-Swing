@@ -28,6 +28,19 @@ public class LoginScreen {
         JButton loginbutton = new JButton("Login");
         loginbutton.setBounds(100,300,100,30);
         loginframe.add(loginbutton);
-
-
-    
+    //Added an action listener to take the credintials of the user the moment he cicks Login Button
+        loginbutton.addActionListener(e->{
+            String userid=username.getText();//Gets the username
+            String pass=password.getText();//Gets the password
+    //Conditions password and username checking        
+                if(userid.isEmpty()||pass.isEmpty()){
+                    JOptionPane.showMessageDialog(loginframe,"Please enter username and password");
+                }else if(userid.equals("Orest")&&pass.equals("1234")){
+                    loginframe.dispose();
+                    new BankingApp();
+                }else{
+                    JOptionPane.showMessageDialog(loginframe,"Invalid username or password");
+                }
+        });
+    }
+}
