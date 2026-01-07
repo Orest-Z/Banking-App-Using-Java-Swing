@@ -109,10 +109,9 @@ public class BankingApp {
 
             
 
-        frame.setVisible(true);
+        loginframe.setVisible(true);
     }
-
-    public static void main(String[] args) {
-        new BankingApp();
-    }
+    /*Since the BankingApp.java needs to be initialized after the LoginScreen.java is succsesful we need 
+    to remove the main method here and transfer it to the LoginScreen class*/
+   
 }
