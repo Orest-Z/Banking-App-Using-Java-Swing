@@ -24,5 +24,10 @@ public class LoginScreen {
         JPasswordField password = new JPasswordField();
         password.setBounds(100,250,100,30);
         loginframe.add(password);
+    //Added the Login Button
+        JButton loginbutton = new JButton("Login");
+        loginbutton.setBounds(100,300,100,30);
+        loginframe.add(loginbutton);
+
 
     
