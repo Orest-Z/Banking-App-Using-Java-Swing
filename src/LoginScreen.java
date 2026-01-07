@@ -42,5 +42,8 @@ public class LoginScreen {
                     JOptionPane.showMessageDialog(loginframe,"Invalid username or password");
                 }
         });
+        
+    //Fixed a bug where the window was not showing cause of which was to set the frame to visible
+        loginframe.setVisible(true);
     }
 }
