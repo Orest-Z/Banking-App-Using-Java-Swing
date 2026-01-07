@@ -46,4 +46,9 @@ public class LoginScreen {
     //Fixed a bug where the window was not showing cause of which was to set the frame to visible
         loginframe.setVisible(true);
     }
+    //Transfered the main method here so the applicatoin initializes at this point then if succesful BankingApp.java is ran
+    public static void main(String[] args) {
+        new LoginScreen();
+    }    
+    
 }
