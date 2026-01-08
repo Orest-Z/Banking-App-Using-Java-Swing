@@ -20,6 +20,8 @@ public class LoginScreen {
     //Add a label for the username input
           JLabel loginlabel = new JLabel("Enter Username:");
           loginlabel.setBounds(100,50,100,30);
+          loginlabel.setForeground(Color.decode("#85409D"));//Made the text appear in a different color
+          loginlabel.setFont(new Font("SansSerif", Font.BOLD, 20));//Change the font
           loginframe.add(loginlabel);
     //Added the textfield and set its bounds where the user will be able to input its username    
         JTextField username = new JTextField();
@@ -28,6 +30,8 @@ public class LoginScreen {
     //Created a label for login password
         JLabel loginPassword = new JLabel("Enter Password:");
         loginPassword.setBounds(100,200,100,30);
+        loginPassword.setForeground(Color.decode("#85409D"));
+        loginPassword.setFont(new Font("SansSerif", Font.BOLD, 20));//Changed the font
         loginframe.add(loginPassword);
     //Added the password input field (Different from text input field the password field shows credintials as *)
         JPasswordField password = new JPasswordField();
