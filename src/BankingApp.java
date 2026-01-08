@@ -12,11 +12,14 @@ public class BankingApp {
     public BankingApp() {
         JFrame frame = new JFrame("Banking App v1.5");
         frame.setSize(450, 600);
+        frame.getContentPane().setBackground(Color.decode("#FFEF5F"));//Changed backgorund color
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
 
         JLabel timeLabel = new JLabel();
-        timeLabel.setBounds(250, 10, 200, 30);
+        timeLabel.setBounds(250, 10, 180, 30);
+        timeLabel.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 12));
+        timeLabel.setForeground(Color.decode("#4D2B8C"));//Changed the color of clock text
         frame.add(timeLabel);
 
         Timer timer = new Timer(1000, new ActionListener() {
@@ -37,10 +40,12 @@ public class BankingApp {
 
         JButton depositBtn = new JButton("Deposit");
         depositBtn.setBounds(50, 110, 100, 30);
+        depositBtn.setBackground(Color.green);//Made the deposit button Green
         frame.add(depositBtn);
 
         JButton withdrawBtn = new JButton("Withdraw");
         withdrawBtn.setBounds(160, 110, 100, 30);
+        withdrawBtn.setBackground(Color.red);//Made the withdraw button red
         frame.add(withdrawBtn);
 
         JButton DownloadHistory = new JButton("Download History");
