@@ -7,7 +7,16 @@ public class LoginScreen {
         loginframe.setSize(400,400);
         loginframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         loginframe.setLayout(null);
+        //Added the backgorund color 
+        loginframe.getContentPane().setBackground(Color.decode("#FFEF5F"));
         loginframe.setResizable(false);
+        //Added a new text which welcomes the user and styled it
+        JLabel title = new JLabel("WELCOME BACK", SwingConstants.CENTER);
+        title.setFont(new Font("Times New Roman", Font.BOLD, 25));
+        title.setForeground(Color.decode("#4D2B8C"));
+        title.setBounds(0, 10, 400, 40);
+        loginframe.add(title);
+        
     //Add a label for the username input
           JLabel loginlabel = new JLabel("Enter Username:");
           loginlabel.setBounds(100,50,100,30);
@@ -45,7 +54,8 @@ public class LoginScreen {
                     JOptionPane.showMessageDialog(loginframe,"Invalid username or password");
                 }
         });
-        
+        //Made the app start at the center of screen
+        loginframe.setLocationRelativeTo(null);
     //Fixed a bug where the window was not showing cause of which was to set the frame to visible
         loginframe.setVisible(true);
     }
