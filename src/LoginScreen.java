@@ -35,6 +35,9 @@ public class LoginScreen {
     //Conditions password and username checking        
                 if(userid.isEmpty()||pass.isEmpty()){
                     JOptionPane.showMessageDialog(loginframe,"Please enter username and password");
+                    //Fixed a bug so that when the password or username is incorrect we clear both fields
+                    username.setText("");
+                    password.setText("");
                 }else if(userid.equals("Orest")&&pass.equals("1234")){
                     loginframe.dispose();
                     new BankingApp();
