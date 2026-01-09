@@ -6,10 +6,13 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 
 public class BankingApp {
+    private String username;
     private double balance = 0.0;
     private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-
-    public BankingApp() {
+    
+    public BankingApp(String user)/*Now the constructor takes as a parameter the username*/ {
+        this.username=user;//Used a setter for the username variable
+        
         JFrame frame = new JFrame("Banking App v1.5");
         frame.setSize(450, 600);
         frame.getContentPane().setBackground(Color.decode("#FFEF5F"));//Changed backgorund color
@@ -29,6 +32,12 @@ public class BankingApp {
             }
         });
         timer.start();
+        //Added a welcoming message which is different based on the username variable
+        JLabel welcomeLabel = new JLabel("Welcome, " + username);
+        welcomeLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
+        welcomeLabel.setForeground(Color.decode("#4D2B8C"));
+        welcomeLabel.setBounds(50, 5, 200, 30);
+        frame.add(welcomeLabel);
 
         JLabel label = new JLabel("Balance: $0.0");
         label.setBounds(50, 30, 200, 30);
@@ -58,7 +67,7 @@ public class BankingApp {
 
         JTextArea historyLog = new JTextArea();
         historyLog.setEditable(false);
-        historyLog.setFont(new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 12));
+        historyLog.setFont(new java.awt.Font("Monospaced", java.awt.Font.BOLD, 12));
 
         JScrollPane scrollPane = new JScrollPane(historyLog);
         scrollPane.setBounds(50, 200, 330, 300);
