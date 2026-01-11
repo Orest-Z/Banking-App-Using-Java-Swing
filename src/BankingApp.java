@@ -61,6 +61,11 @@ public class BankingApp {
         DownloadHistory.setBounds(270, 110, 150, 30);
         frame.add(DownloadHistory);
 
+        JButton saveBtn = new JButton("Save");//Added the button to save info
+        saveBtn.setBounds(270, 130, 150, 30);
+        saveBtn.setBackground(Color.CYAN);
+        frame.add(saveBtn);
+
         JLabel historyTitle = new JLabel("Transaction History:");
         historyTitle.setBounds(50, 170, 200, 30);
         frame.add(historyTitle);
@@ -118,6 +123,21 @@ public class BankingApp {
                 JOptionPane.showMessageDialog(frame, "Bank Statement has been downloaded!");
             }catch(Exception ex){
                 JOptionPane.showMessageDialog(frame, ex.getMessage());
+            }
+        });
+
+         //Save button logic
+        saveBtn.addActionListener(e -> {
+            try{
+                FileWriter fw=new FileWriter(username+"_data.txt");
+                PrintWriter pw=new PrintWriter(fw);
+                pw.println("Balance: " + balance + "\n");
+                pw.print(historyLog.getText());
+                pw.close();
+
+                JOptionPane.showMessageDialog(frame, "Bank Statement has been saved!");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
             }
         });
 
