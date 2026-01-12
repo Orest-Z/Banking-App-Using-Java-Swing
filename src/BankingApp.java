@@ -151,8 +151,23 @@ public class BankingApp {
             }
         }else balance=0.0;
 
-            
+        //Save button logic
+        saveBtn.addActionListener(e -> {
+            try{
+                FileWriter fw=new FileWriter(username+"_data.txt");
+                PrintWriter pw=new PrintWriter(fw);
+                pw.println("Balance: " + balance + "\n");
+                pw.print(historyLog.getText());
+                pw.close();
 
+                JOptionPane.showMessageDialog(frame, "Bank Statement has been saved!");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+            
+        
+        frame.setLocationRelativeTo(null);
         loginframe.setVisible(true);
     }
     /*Since the BankingApp.java needs to be initialized after the LoginScreen.java is succsesful we need 
