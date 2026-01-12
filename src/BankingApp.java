@@ -13,7 +13,7 @@ public class BankingApp {
     public BankingApp(String user)/*Now the constructor takes as a parameter the username*/ {
         this.username=user;//Used a setter for the username variable
         
-        JFrame frame = new JFrame("Banking App v1.5");
+        JFrame frame = new JFrame("Banking App v1.11");
         frame.setSize(450, 600);
         frame.getContentPane().setBackground(Color.decode("#FFEF5F"));//Changed backgorund color
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
