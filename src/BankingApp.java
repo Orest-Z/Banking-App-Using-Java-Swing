@@ -159,18 +159,30 @@ public class BankingApp {
         
 
         
-        //Open the file with the user saved data and then load them to the application    
+        //Open the file with the user saved data and then load them to the application **FIXED DAY 11 Version**   
         File file=new File(username+"_data.txt");
-        Scanner sc=new Scanner(username+"_data.txt");
-        if(file.exists()){
-            balance=Double.parseDouble(sc.nextLine());
-            while(sc.hasNextLine()){
-                historyLog.append(sc.nextLine()+"\n");
+        if (file.exists()) {
+            try {
+                Scanner sc = new Scanner(file); // PASS THE FILE OBJECT HERE
+                if (sc.hasNextLine()) {
+                    String firstLine = sc.nextLine();
+                    //Trimmed the first line so it removes the spaces to read the balance only
+                    balance = Double.parseDouble(firstLine.trim());
+                    // Update the label so it doesn't show $0.0 on startup
+                    label.setText("Balance: $" + balance);
+                }
+                while (sc.hasNextLine()) {
+                    historyLog.append(sc.nextLine() + "\n");
+                }
+                sc.close(); // IMPORTANT: Close the file so other processes can use it
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found, starting fresh.");
             }
-        }else balance=0.0;
-
+        } else {
+            balance = 0.0;
+        }
             
-        
+
         frame.setLocationRelativeTo(null);
         loginframe.setVisible(true);
     }
