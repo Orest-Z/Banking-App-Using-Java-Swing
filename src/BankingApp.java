@@ -141,6 +141,24 @@ public class BankingApp {
             }
         });
 
+    
+        //Save button logic
+        saveBtn.addActionListener(e -> {
+            try{
+                FileWriter fw=new FileWriter(username+"_data.txt");
+                PrintWriter pw=new PrintWriter(fw);
+                pw.println(balance);//Removed the word balance and the \n for better readability from the text file
+                pw.print(historyLog.getText());
+                pw.close();
+
+                JOptionPane.showMessageDialog(frame, "Bank Statement has been saved!");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        
+
+        
         //Open the file with the user saved data and then load them to the application    
         File file=new File(username+"_data.txt");
         Scanner sc=new Scanner(username+"_data.txt");
@@ -151,20 +169,6 @@ public class BankingApp {
             }
         }else balance=0.0;
 
-        //Save button logic
-        saveBtn.addActionListener(e -> {
-            try{
-                FileWriter fw=new FileWriter(username+"_data.txt");
-                PrintWriter pw=new PrintWriter(fw);
-                pw.println("Balance: " + balance + "\n");
-                pw.print(historyLog.getText());
-                pw.close();
-
-                JOptionPane.showMessageDialog(frame, "Bank Statement has been saved!");
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
             
         
         frame.setLocationRelativeTo(null);
