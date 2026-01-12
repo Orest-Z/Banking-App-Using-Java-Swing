@@ -141,6 +141,16 @@ public class BankingApp {
             }
         });
 
+        //Open the file with the user saved data and then load them to the application    
+        File file=new File(username+"_data.txt");
+        Scanner sc=new Scanner(username+"_data.txt");
+        if(file.exists()){
+            balance=Double.parseDouble(sc.nextLine());
+            while(sc.hasNextLine()){
+                historyLog.append(sc.nextLine()+"\n");
+            }
+        }else balance=0.0;
+
             
 
         loginframe.setVisible(true);
