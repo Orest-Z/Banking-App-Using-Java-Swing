@@ -99,6 +99,10 @@ public class BankingApp {
             try {
                 double amount = Double.parseDouble(input.getText());
                 if (amount <= balance) {
+                    if(amount<0){
+                    JOptionPane.showMessageDialog(frame, "Amount must be positive!");
+                    return; // Stop the code here
+                    }
                     balance -= amount;
                     String timestamp = LocalDateTime.now().format(dtf);
                     historyLog.append("[" + timestamp + "] Withdrew:  $" + amount + "\n");
