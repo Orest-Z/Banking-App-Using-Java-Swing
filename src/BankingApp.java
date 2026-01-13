@@ -81,6 +81,10 @@ public class BankingApp {
         depositBtn.addActionListener(e -> {
             try {
                 double amount = Double.parseDouble(input.getText());
+                if(amount<0){
+                     JOptionPaneJOptionPane.showMessageDialog(frame, "Amount must be positive!");
+                     return;//Stop here if the ammount is negative
+                        }
                 balance += amount;
                 String timestamp = LocalDateTime.now().format(dtf);
                 historyLog.append("[" + timestamp + "] Deposited: $" + amount + "\n");
