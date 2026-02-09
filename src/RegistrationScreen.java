@@ -344,14 +344,7 @@ public class RegistrationScreen {
         }
     }
     
-    /**
-     * ==========================================
-     * MAIN METHOD (FOR TESTING)
-     * ==========================================
-     * 
-     * This allows you to run the RegistrationScreen independently for testing
-     * Usage: Right-click this file and select "Run"
-     */
+    
     public static void main(String[] args) {
         // Run on the Event Dispatch Thread (EDT) - required for Swing applications
         SwingUtilities.invokeLater(() -> new RegistrationScreen());
