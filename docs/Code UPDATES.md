@@ -22,3 +22,10 @@
 **DAY 12**Today i noticed a small bug which was allowing the user to input negative values in the amount variable so in that way the app would take it as the opposite. I corrected that bug by adding a if control which checks it the amount inputed at the withdraw and deposit btn is clicked, if(amount<0) we would create a JOptionPane which would give us a message saying that the amount cannot be negative. \\**ALSO UPDATE** i will not be working too much on this project the upcoming days since i will mainly focus on learning C++ because i have an exam but I will make sure to come back and make some small improvments here when i have free time(Mostly organizing code since now it kinda has gotten really messy and needs to be cleaned). 
 
 **DAY 13** I have been very busy during the last weeks but as of now i have made some very big improvements to my application using some guidance from my ai assistant for mostly the security part and adding the feature so that new users can register. 
+**EXPLENATION FOR UPDATE** -> In this update i have added lots of new features which were lacking in the previous versions. One of the most important ones is the password storing way. Each password created for an account is converted into a hash which is then saved into a txt file meaning even if our files get compromised reverse engineering a hashed password is near impossible. I have added a create new account option for new users. Currently it only has a easy way of registering by a username and a password which also has to complete some security checks (being 6 characters long minimum). As i said this version is a bit better and well upgraded from the last but i also note that many core fundementals for uploading a banking application are missing such as :
+1.**Text file storage** - Not suitable for production 
+2. **No password salting** - Same password = same hash
+3. **No session management** - App closes when window closes
+4. **No password recovery** - If you forget password, account is lost
+5. **Single computer only** - Data stored locally 
+ I will be looking forward into improving it day by day.
