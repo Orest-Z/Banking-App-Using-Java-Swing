@@ -19,12 +19,31 @@ public class LoginScreen {
         // ==========================================
         // STEP 1: CREATE THE LOGIN WINDOW
         // ==========================================
-        
+        //Color improvements
+        Color softCream = new Color(255, 253, 208);      // Main background (softer yellow)
+        Color cardBackground = new Color(255, 255, 240); // Even lighter for panels/cards
+
+    // TEXT COLORS
+        Color darkIndigo = new Color(75, 0, 130);        // Headers (instead of bright purple)
+        Color charcoalGray = new Color(51, 51, 51);      // Body text (easier to read)
+        Color mutedPurple = new Color(106, 13, 173);     // Secondary text/labels
+
+    // BUTTON COLORS
+    Color forestGreen = new Color(34, 139, 34);      // Login button
+    Color royalBlue = new Color(65, 105, 225);       // Create Account button
+    Color buttonHoverGreen = new Color(46, 184, 46); // Login hover
+    Color buttonHoverBlue = new Color(85, 125, 245); // Create Account hover
+
+    // ACCENTS
+    Color errorRed = new Color(220, 53, 69);         // Error messages
+    Color borderGray = new Color(200, 200, 200);     // Input field borders
+
+            
         JFrame loginframe = new JFrame("Login Screen");
         loginframe.setSize(400, 450); // Made slightly taller to fit the new button
         loginframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         loginframe.setLayout(null);
-        loginframe.getContentPane().setBackground(Color.decode("#FFEF5F"));
+        loginframe.getContentPane().setBackground(softCream);
         loginframe.setResizable(false);
 
         // ==========================================
@@ -33,7 +52,7 @@ public class LoginScreen {
         
         JLabel title = new JLabel("WELCOME BACK", SwingConstants.CENTER);
         title.setFont(new Font("Times New Roman", Font.BOLD, 25));
-        title.setForeground(Color.decode("#4D2B8C"));
+        title.setForeground(darkIndigo);
         title.setBounds(0, 10, 400, 40);
         loginframe.add(title);
 
@@ -43,7 +62,7 @@ public class LoginScreen {
         
         JLabel loginlabel = new JLabel("Enter Username:");
         loginlabel.setBounds(100, 60, 200, 30);
-        loginlabel.setForeground(Color.decode("#85409D"));
+        loginlabel.setForeground(darkIndigo);
         loginframe.add(loginlabel);
         loginlabel.setFont(new Font("SansSerif", Font.BOLD, 20));
 
@@ -59,7 +78,7 @@ public class LoginScreen {
         JLabel loginPassword = new JLabel("Enter Password:");
         loginPassword.setFont(new Font("SansSerif", Font.BOLD, 20));
         loginPassword.setBounds(100, 140, 200, 30);
-        loginPassword.setForeground(Color.decode("#85409D"));
+        loginPassword.setForeground(darkIndigo);
         loginframe.add(loginPassword);
 
         JPasswordField password = new JPasswordField();
