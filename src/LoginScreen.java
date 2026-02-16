@@ -116,6 +116,15 @@ public class LoginScreen {
         loginbutton.setForeground(Color.WHITE);
         loginbutton.setFocusPainted(false);
         loginframe.add(loginbutton);
+        //Effect when hovering mouse over login
+        loginbutton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(MouseEvent evt) {
+                loginbutton.setBackground(buttonHoverGreen);
+            }
+            public void mouseExited(MouseEvent evt) {
+                loginbutton.setBackground(forestGreen);
+            }
+        });
 
         // ==========================================
         // STEP 6: CREATE ACCOUNT BUTTON (NEW!)
@@ -128,7 +137,16 @@ public class LoginScreen {
         createAccountButton.setForeground(Color.WHITE);
         createAccountButton.setFocusPainted(false);
         loginframe.add(createAccountButton);
-        
+        //Effects for hovering mouse over create account button
+        createAccountButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(MouseEvent evt) {
+                createAccountButton.setBackground(buttonHoverBlue);
+            }
+            public void mouseExited(MouseEvent evt) {
+                createAccountButton.setBackground(royalBlue);
+            }
+        });
+
         // Helpful text below the button
         JLabel hintLabel = new JLabel("Don't have an account?", SwingConstants.CENTER);
         hintLabel.setBounds(100, 325, 200, 20);
