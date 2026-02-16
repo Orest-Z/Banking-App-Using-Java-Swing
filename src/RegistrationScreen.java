@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.io.*;
 import java.security.MessageDigest;
@@ -25,18 +24,8 @@ public class RegistrationScreen {
     
     // CONSTRUCTOR: This runs when you create a new RegistrationScreen object
     public RegistrationScreen() {
-        
-        // ==========================================
-        // STEP 1: CREATE THE MAIN WINDOW (FRAME)
-        // ==========================================
-        
-        JFrame registerFrame = new JFrame("Create New Account");
-        registerFrame.setSize(450, 500);  // Width: 450px, Height: 500px
-        registerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Close only this window, not entire app
-        registerFrame.setLayout(null);  // null layout = we manually position everything with setBounds()
-        registerFrame.getContentPane().setBackground(new Color(255, 253, 208)); // softCream
-        registerFrame.setResizable(false); // User can't resize the window
-        
+
+        //Colors and fonts improvements
         // COLOR SCHEME (matching LoginScreen)
         Color softCream = new Color(255, 253, 208);
         Color darkIndigo = new Color(75, 0, 130);
@@ -45,14 +34,25 @@ public class RegistrationScreen {
         Color forestGreen = new Color(34, 139, 34);
         Color lightGray = new Color(189, 189, 189);
         Color borderGray = new Color(200, 200, 200);
-        
+
         // FONTS (matching LoginScreen)
         Font headerFont = new Font("Segoe UI", Font.BOLD, 28);
         Font labelFont = new Font("Segoe UI", Font.BOLD, 18);
         Font inputFont = new Font("Segoe UI", Font.PLAIN, 14);
         Font buttonFont = new Font("Segoe UI", Font.BOLD, 16);
         Font smallFont = new Font("Segoe UI", Font.ITALIC, 11);
+
+        // ==========================================
+        // STEP 1: CREATE THE MAIN WINDOW (FRAME)
+        // ==========================================
         
+        JFrame registerFrame = new JFrame("Create New Account");
+        registerFrame.setSize(450, 500);  // Width: 450px, Height: 500px
+        registerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Close only this window, not entire app
+        registerFrame.setLayout(null);  // null layout = we manually position everything with setBounds()
+        registerFrame.getContentPane().setBackground(softCream);
+        registerFrame.setResizable(false); // User can't resize the window
+
         // ==========================================
         // STEP 2: CREATE THE TITLE LABEL
         // ==========================================
@@ -78,14 +78,14 @@ public class RegistrationScreen {
         JTextField usernameField = new JTextField();
         usernameField.setBounds(80, 115, 280, 35);
         usernameField.setFont(inputFont);
+        registerFrame.add(usernameField);
+
         usernameField.setForeground(charcoalGray);
         usernameField.setBackground(Color.WHITE);
         usernameField.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(borderGray, 1),
-            BorderFactory.createEmptyBorder(5, 10, 5, 10)
+                BorderFactory.createLineBorder(borderGray, 1),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
-        registerFrame.add(usernameField);
-        
         // Hint text below the username field
         JLabel usernameHint = new JLabel("(3-20 characters, letters and numbers only)");
         usernameHint.setBounds(80, 150, 300, 20);
@@ -107,13 +107,13 @@ public class RegistrationScreen {
         JPasswordField passwordField = new JPasswordField();
         passwordField.setBounds(80, 215, 280, 35);
         passwordField.setFont(inputFont);
+        registerFrame.add(passwordField);
         passwordField.setForeground(charcoalGray);
         passwordField.setBackground(Color.WHITE);
         passwordField.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(borderGray, 1),
-            BorderFactory.createEmptyBorder(5, 10, 5, 10)
+                BorderFactory.createLineBorder(borderGray, 1),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
-        registerFrame.add(passwordField);
         
         JLabel passwordHint = new JLabel("(Minimum 6 characters)");
         passwordHint.setBounds(80, 250, 300, 20);
@@ -134,14 +134,13 @@ public class RegistrationScreen {
         JPasswordField confirmPasswordField = new JPasswordField();
         confirmPasswordField.setBounds(80, 315, 280, 35);
         confirmPasswordField.setFont(inputFont);
+        registerFrame.add(confirmPasswordField);
         confirmPasswordField.setForeground(charcoalGray);
         confirmPasswordField.setBackground(Color.WHITE);
         confirmPasswordField.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(borderGray, 1),
-            BorderFactory.createEmptyBorder(5, 10, 5, 10)
+                BorderFactory.createLineBorder(borderGray, 1),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
-        registerFrame.add(confirmPasswordField);
-        
         // ==========================================
         // STEP 6: REGISTER BUTTON
         // ==========================================
@@ -153,8 +152,7 @@ public class RegistrationScreen {
         registerButton.setForeground(Color.WHITE);
         registerButton.setFocusPainted(false); // Removes the ugly border when clicked
         registerFrame.add(registerButton);
-        
-        // Add hover effect to register button
+        // ADD THIS ENTIRE BLOCK after registerFrame.add(registerButton);
         registerButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 registerButton.setBackground(new Color(46, 184, 46)); // buttonHoverGreen
@@ -173,8 +171,7 @@ public class RegistrationScreen {
         backButton.setFont(buttonFont);
         backButton.setBackground(lightGray);
         registerFrame.add(backButton);
-        
-        // Add hover effect to back button
+
         backButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 backButton.setBackground(new Color(169, 169, 169)); // darker gray
@@ -183,7 +180,7 @@ public class RegistrationScreen {
                 backButton.setBackground(lightGray);
             }
         });
-        
+
         // ==========================================
         // STEP 8: REGISTER BUTTON ACTION LISTENER
         // This code runs when the user clicks "Register Account"
@@ -399,7 +396,14 @@ public class RegistrationScreen {
         }
     }
     
-    
+    /**
+     * ==========================================
+     * MAIN METHOD (FOR TESTING)
+     * ==========================================
+     * 
+     * This allows you to run the RegistrationScreen independently for testing
+     * Usage: Right-click this file and select "Run"
+     */
     public static void main(String[] args) {
         // Run on the Event Dispatch Thread (EDT) - required for Swing applications
         SwingUtilities.invokeLater(() -> new RegistrationScreen());

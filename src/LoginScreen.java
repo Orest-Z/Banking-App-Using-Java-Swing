@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -7,6 +8,8 @@ import java.util.Scanner;
 
 /**
  * LoginScreen.java (UPDATED VERSION)
+ * 
+ * This is the improved version of your login screen that:
  * 1. Works with the new registration system
  * 2. Uses hashed passwords for security
  * 3. Validates credentials from the credentials.txt file
@@ -23,22 +26,29 @@ public class LoginScreen {
         Color softCream = new Color(255, 253, 208);      // Main background (softer yellow)
         Color cardBackground = new Color(255, 255, 240); // Even lighter for panels/cards
 
-    // TEXT COLORS
+        // TEXT COLORS
         Color darkIndigo = new Color(75, 0, 130);        // Headers (instead of bright purple)
         Color charcoalGray = new Color(51, 51, 51);      // Body text (easier to read)
         Color mutedPurple = new Color(106, 13, 173);     // Secondary text/labels
 
-    // BUTTON COLORS
-    Color forestGreen = new Color(34, 139, 34);      // Login button
-    Color royalBlue = new Color(65, 105, 225);       // Create Account button
-    Color buttonHoverGreen = new Color(46, 184, 46); // Login hover
-    Color buttonHoverBlue = new Color(85, 125, 245); // Create Account hover
+        // BUTTON COLORS
+        Color forestGreen = new Color(34, 139, 34);      // Login button
+        Color royalBlue = new Color(65, 105, 225);       // Create Account button
+        Color buttonHoverGreen = new Color(46, 184, 46); // Login hover
+        Color buttonHoverBlue = new Color(85, 125, 245); // Create Account hover
 
-    // ACCENTS
-    Color errorRed = new Color(220, 53, 69);         // Error messages
-    Color borderGray = new Color(200, 200, 200);     // Input field borders
+        // ACCENTS
+        Color errorRed = new Color(220, 53, 69);         // Error messages
+        Color borderGray = new Color(200, 200, 200);     // Input field borders
 
-            
+        // FONTS
+        Font headerFont = new Font("Segoe UI", Font.BOLD, 28);      // Title
+        Font labelFont = new Font("Segoe UI", Font.BOLD, 18);       // Labels
+        Font inputFont = new Font("Segoe UI", Font.PLAIN, 14);      // Text fields
+        Font buttonFont = new Font("Segoe UI", Font.BOLD, 16);      // Buttons
+        Font smallFont = new Font("Segoe UI", Font.ITALIC, 12);     // Hints
+
+
         JFrame loginframe = new JFrame("Login Screen");
         loginframe.setSize(400, 450); // Made slightly taller to fit the new button
         loginframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,7 +59,7 @@ public class LoginScreen {
         // ==========================================
         // STEP 2: TITLE LABEL
         // ==========================================
-        
+
         JLabel title = new JLabel("WELCOME BACK", SwingConstants.CENTER);
         title.setFont(headerFont);
         title.setForeground(darkIndigo);
@@ -62,10 +72,12 @@ public class LoginScreen {
         
         JLabel loginlabel = new JLabel("Enter Username:");
         loginlabel.setBounds(100, 60, 200, 30);
-        loginlabel.setForeground(darkIndigo);
+        loginlabel.setForeground(mutedPurple);
         loginframe.add(loginlabel);
         loginlabel.setFont(labelFont);
+
         JTextField username = new JTextField();
+        username.setForeground(charcoalGray);
         username.setBounds(100, 90, 200, 30);
         username.setFont(inputFont);
         username.setBorder(BorderFactory.createCompoundBorder(
@@ -73,8 +85,7 @@ public class LoginScreen {
                 BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
         loginframe.add(username);
-        
-        
+
         // ==========================================
         // STEP 4: PASSWORD INPUT
         // ==========================================
@@ -88,6 +99,10 @@ public class LoginScreen {
         JPasswordField password = new JPasswordField();
         password.setBounds(100, 170, 200, 30);
         password.setFont(inputFont);
+        password.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(borderGray, 1),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        ));
         loginframe.add(password);
 
         // ==========================================
@@ -101,8 +116,8 @@ public class LoginScreen {
         loginbutton.setForeground(Color.WHITE);
         loginbutton.setFocusPainted(false);
         loginframe.add(loginbutton);
-                //Effect when hovering mouse over login
-         loginbutton.addMouseListener(new java.awt.event.MouseAdapter() {
+        //Effect when hovering mouse over login
+        loginbutton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(MouseEvent evt) {
                 loginbutton.setBackground(buttonHoverGreen);
             }
@@ -110,7 +125,6 @@ public class LoginScreen {
                 loginbutton.setBackground(forestGreen);
             }
         });
-
 
         // ==========================================
         // STEP 6: CREATE ACCOUNT BUTTON (NEW!)
@@ -122,7 +136,7 @@ public class LoginScreen {
         createAccountButton.setBackground(royalBlue); // Blue color
         createAccountButton.setForeground(Color.WHITE);
         createAccountButton.setFocusPainted(false);
-        loginframe.add(createAccountButton); 
+        loginframe.add(createAccountButton);
         //Effects for hovering mouse over create account button
         createAccountButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(MouseEvent evt) {
@@ -132,7 +146,7 @@ public class LoginScreen {
                 createAccountButton.setBackground(royalBlue);
             }
         });
-        
+
         // Helpful text below the button
         JLabel hintLabel = new JLabel("Don't have an account?", SwingConstants.CENTER);
         hintLabel.setBounds(100, 325, 200, 20);

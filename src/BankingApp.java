@@ -6,38 +6,33 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-/**
- * BankingApp.java (UPDATED VERSION)
- */
-// COLORS
-Color softCream = new Color(255, 253, 208);
-Color darkIndigo = new Color(75, 0, 130);
-Color charcoalGray = new Color(51, 51, 51);
-Color mutedPurple = new Color(106, 13, 173);
-Color forestGreen = new Color(34, 139, 34);
-Color crimsonRed = new Color(220, 53, 69);
-Color goldenYellow = new Color(255, 193, 7);
-Color skyBlue = new Color(33, 150, 243);
-Color borderGray = new Color(200, 200, 200);
-Color logoutOrange = new Color(255, 152, 0);
-
-// FONTS
-Font headerFont = new Font("Segoe UI", Font.BOLD, 20);
-Font labelFont = new Font("Segoe UI", Font.BOLD, 16);
-Font inputFont = new Font("Segoe UI", Font.PLAIN, 14);
-Font buttonFont = new Font("Segoe UI", Font.BOLD, 14);
-Font smallFont = new Font("Segoe UI", Font.PLAIN, 12);
-Font historyFont = new Font("Segoe UI", Font.PLAIN, 11);
-
 public class BankingApp {
     private final String username;
     private double balance = 0.0;
     private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+    // COLORS
+    Color softCream = new Color(255, 253, 208);
+    Color darkIndigo = new Color(75, 0, 130);
+    Color charcoalGray = new Color(51, 51, 51);
+    Color mutedPurple = new Color(106, 13, 173);
+    Color forestGreen = new Color(34, 139, 34);
+    Color crimsonRed = new Color(220, 53, 69);
+    Color goldenYellow = new Color(255, 193, 7);
+    Color skyBlue = new Color(33, 150, 243);
+    Color borderGray = new Color(200, 200, 200);
+    Color logoutOrange = new Color(255, 152, 0);
 
+    // FONTS
+    Font headerFont = new Font("Segoe UI", Font.BOLD, 20);
+    Font labelFont = new Font("Segoe UI", Font.BOLD, 16);
+    Font inputFont = new Font("Segoe UI", Font.PLAIN, 14);
+    Font buttonFont = new Font("Segoe UI", Font.BOLD, 14);
+    Font smallFont = new Font("Segoe UI", Font.PLAIN, 12);
+    Font historyFont = new Font("Segoe UI", Font.PLAIN, 11);
     public BankingApp(String user) {
         this.username = user;
 
-        JFrame frame = new JFrame("Banking App v2.0 - Secure Edition");
+        JFrame frame = new JFrame("Banking App v2.2");
         frame.setSize(450, 600);
         frame.getContentPane().setBackground(softCream);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,7 +43,7 @@ public class BankingApp {
         // ==========================================
         
         JLabel timeLabel = new JLabel();
-        timeLabel.setBounds(250, 10, 180, 30); 
+        timeLabel.setBounds(250, 10, 180, 30);
         timeLabel.setFont(smallFont);
         timeLabel.setForeground(mutedPurple);
         frame.add(timeLabel);
@@ -102,7 +97,7 @@ public class BankingApp {
         // ==========================================
         
         JButton depositBtn = new JButton("Deposit");
-                depositBtn.setFont(buttonFont);
+        depositBtn.setFont(buttonFont);
         depositBtn.setBounds(50, 110, 100, 30);
         depositBtn.setBackground(forestGreen);
         depositBtn.setForeground(Color.WHITE);
@@ -140,7 +135,7 @@ public class BankingApp {
         DownloadHistory.setFont(buttonFont);
         DownloadHistory.setFocusPainted(false);
         frame.add(DownloadHistory);
-         DownloadHistory.addMouseListener(new java.awt.event.MouseAdapter() {
+        DownloadHistory.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 DownloadHistory.setBackground(new Color(255, 213, 79));
             }
@@ -164,6 +159,101 @@ public class BankingApp {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 saveBtn.setBackground(skyBlue);
             }
+        });
+
+        // ==========================================
+// LOGOUT BUTTON (Back to Login Screen)
+// ==========================================
+
+        JButton logoutButton = new JButton("Logout");
+        logoutButton.setBounds(50, 500, 150, 35);
+        logoutButton.setFont(buttonFont);
+        logoutButton.setBackground(logoutOrange);
+        logoutButton.setForeground(Color.WHITE);
+        logoutButton.setFocusPainted(false);
+        frame.add(logoutButton);
+
+// Hover effect
+        logoutButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                logoutButton.setBackground(new Color(255, 183, 77));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                logoutButton.setBackground(logoutOrange);
+            }
+        });
+
+// Action listener
+        logoutButton.addActionListener(e -> {
+            int confirm = JOptionPane.showConfirmDialog(
+                    frame,
+                    "Do you want to save before logging out?",
+                    "Logout Confirmation",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                // Trigger the existing Save button
+                saveBtn.doClick();
+
+                // Close and go to login
+                frame.dispose();
+                new LoginScreen();
+
+            } else if (confirm == JOptionPane.NO_OPTION) {
+                // Logout without saving
+                frame.dispose();
+                new LoginScreen();
+            }
+            // If CANCEL, do nothing
+        });
+        // ==========================================
+// EXIT BUTTON (Quit Application)
+// ==========================================
+
+        JButton exitButton = new JButton("Exit");
+        exitButton.setBounds(210, 500, 150, 35);
+        exitButton.setFont(buttonFont);
+        exitButton.setBackground(new Color(158, 158, 158)); // Gray
+        exitButton.setForeground(Color.WHITE);
+        exitButton.setFocusPainted(false);
+        frame.add(exitButton);
+
+// Hover effect
+        exitButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                exitButton.setBackground(new Color(117, 117, 117));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                exitButton.setBackground(new Color(158, 158, 158));
+            }
+        });
+
+// Action listener
+        exitButton.addActionListener(e -> {
+            int confirm = JOptionPane.showConfirmDialog(
+                    frame,
+                    "Do you want to save before exiting?",
+                    "Exit Confirmation",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.WARNING_MESSAGE
+            );
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                // Trigger the existing Save button
+                saveBtn.doClick();
+
+                // Wait a moment for save to complete, then exit
+                Timer exitTimer = new Timer(500, evt -> System.exit(0));
+                exitTimer.setRepeats(false);
+                exitTimer.start();
+
+            } else if (confirm == JOptionPane.NO_OPTION) {
+                // Exit without saving
+                System.exit(0);
+            }
+            // If CANCEL, do nothing
         });
 
         // ==========================================
