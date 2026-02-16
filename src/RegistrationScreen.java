@@ -24,7 +24,24 @@ public class RegistrationScreen {
     
     // CONSTRUCTOR: This runs when you create a new RegistrationScreen object
     public RegistrationScreen() {
-        
+
+        //Colors and fonts improvements
+        // COLOR SCHEME (matching LoginScreen)
+        Color softCream = new Color(255, 253, 208);
+        Color darkIndigo = new Color(75, 0, 130);
+        Color charcoalGray = new Color(51, 51, 51);
+        Color mutedPurple = new Color(106, 13, 173);
+        Color forestGreen = new Color(34, 139, 34);
+        Color lightGray = new Color(189, 189, 189);
+        Color borderGray = new Color(200, 200, 200);
+
+        // FONTS (matching LoginScreen)
+        Font headerFont = new Font("Segoe UI", Font.BOLD, 28);
+        Font labelFont = new Font("Segoe UI", Font.BOLD, 18);
+        Font inputFont = new Font("Segoe UI", Font.PLAIN, 14);
+        Font buttonFont = new Font("Segoe UI", Font.BOLD, 16);
+        Font smallFont = new Font("Segoe UI", Font.ITALIC, 11);
+
         // ==========================================
         // STEP 1: CREATE THE MAIN WINDOW (FRAME)
         // ==========================================
@@ -33,16 +50,16 @@ public class RegistrationScreen {
         registerFrame.setSize(450, 500);  // Width: 450px, Height: 500px
         registerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Close only this window, not entire app
         registerFrame.setLayout(null);  // null layout = we manually position everything with setBounds()
-        registerFrame.getContentPane().setBackground(Color.decode("#FFEF5F")); // Same yellow as your app
+        registerFrame.getContentPane().setBackground(softCream);
         registerFrame.setResizable(false); // User can't resize the window
-        
+
         // ==========================================
         // STEP 2: CREATE THE TITLE LABEL
         // ==========================================
         
         JLabel titleLabel = new JLabel("CREATE ACCOUNT", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Times New Roman", Font.BOLD, 28));
-        titleLabel.setForeground(Color.decode("#4D2B8C")); // Purple color
+        titleLabel.setFont(headerFont);
+        titleLabel.setForeground(darkIndigo); // Purple color
         titleLabel.setBounds(0, 20, 450, 40); // x, y, width, height
         registerFrame.add(titleLabel);
         
@@ -53,21 +70,27 @@ public class RegistrationScreen {
         // Label that says "Username:"
         JLabel usernameLabel = new JLabel("Username:");
         usernameLabel.setBounds(80, 80, 200, 30);
-        usernameLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
-        usernameLabel.setForeground(Color.decode("#85409D"));
+        usernameLabel.setFont(labelFont);
+        usernameLabel.setForeground(mutedPurple);
         registerFrame.add(usernameLabel);
         
         // Text field where user types their username
         JTextField usernameField = new JTextField();
         usernameField.setBounds(80, 115, 280, 35);
-        usernameField.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        usernameField.setFont(inputFont);
         registerFrame.add(usernameField);
-        
+
+        usernameField.setForeground(charcoalGray);
+        usernameField.setBackground(Color.WHITE);
+        usernameField.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(borderGray, 1),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        ));
         // Hint text below the username field
         JLabel usernameHint = new JLabel("(3-20 characters, letters and numbers only)");
         usernameHint.setBounds(80, 150, 300, 20);
-        usernameHint.setFont(new Font("SansSerif", Font.ITALIC, 11));
-        usernameHint.setForeground(Color.DARK_GRAY);
+        usernameHint.setFont(smallFont);
+        usernameHint.setForeground(charcoalGray);
         registerFrame.add(usernameHint);
         
         // ==========================================
@@ -76,20 +99,26 @@ public class RegistrationScreen {
         
         JLabel passwordLabel = new JLabel("Password:");
         passwordLabel.setBounds(80, 180, 200, 30);
-        passwordLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
-        passwordLabel.setForeground(Color.decode("#85409D"));
+        passwordLabel.setFont(labelFont);
+        passwordLabel.setForeground(mutedPurple);
         registerFrame.add(passwordLabel);
         
         // JPasswordField hides the password with dots (••••)
         JPasswordField passwordField = new JPasswordField();
         passwordField.setBounds(80, 215, 280, 35);
-        passwordField.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        passwordField.setFont(inputFont);
         registerFrame.add(passwordField);
+        passwordField.setForeground(charcoalGray);
+        passwordField.setBackground(Color.WHITE);
+        passwordField.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(borderGray, 1),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        ));
         
         JLabel passwordHint = new JLabel("(Minimum 6 characters)");
         passwordHint.setBounds(80, 250, 300, 20);
-        passwordHint.setFont(new Font("SansSerif", Font.ITALIC, 11));
-        passwordHint.setForeground(Color.DARK_GRAY);
+        passwordHint.setFont(smallFont);
+        passwordHint.setForeground(charcoalGray);
         registerFrame.add(passwordHint);
         
         // ==========================================
@@ -98,26 +127,40 @@ public class RegistrationScreen {
         
         JLabel confirmPasswordLabel = new JLabel("Confirm Password:");
         confirmPasswordLabel.setBounds(80, 280, 200, 30);
-        confirmPasswordLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
-        confirmPasswordLabel.setForeground(Color.decode("#85409D"));
+        confirmPasswordLabel.setFont(smallFont);
+        confirmPasswordLabel.setForeground(mutedPurple);
         registerFrame.add(confirmPasswordLabel);
         
         JPasswordField confirmPasswordField = new JPasswordField();
         confirmPasswordField.setBounds(80, 315, 280, 35);
-        confirmPasswordField.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        confirmPasswordField.setFont(inputFont);
         registerFrame.add(confirmPasswordField);
-        
+        confirmPasswordField.setForeground(charcoalGray);
+        confirmPasswordField.setBackground(Color.WHITE);
+        confirmPasswordField.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(borderGray, 1),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        ));
         // ==========================================
         // STEP 6: REGISTER BUTTON
         // ==========================================
         
         JButton registerButton = new JButton("Register Account");
         registerButton.setBounds(80, 370, 280, 45);
-        registerButton.setFont(new Font("SansSerif", Font.BOLD, 16));
-        registerButton.setBackground(Color.decode("#4CAF50")); // Green color
+        registerButton.setFont(buttonFont);
+        registerButton.setBackground(forestGreen); // Green color
         registerButton.setForeground(Color.WHITE);
         registerButton.setFocusPainted(false); // Removes the ugly border when clicked
         registerFrame.add(registerButton);
+        // ADD THIS ENTIRE BLOCK after registerFrame.add(registerButton);
+        registerButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                registerButton.setBackground(new Color(46, 184, 46)); // buttonHoverGreen
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                registerButton.setBackground(forestGreen);
+            }
+        });
         
         // ==========================================
         // STEP 7: BACK TO LOGIN BUTTON
@@ -125,10 +168,19 @@ public class RegistrationScreen {
         
         JButton backButton = new JButton("Back to Login");
         backButton.setBounds(80, 425, 280, 35);
-        backButton.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        backButton.setBackground(Color.LIGHT_GRAY);
+        backButton.setFont(buttonFont);
+        backButton.setBackground(lightGray);
         registerFrame.add(backButton);
-        
+
+        backButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                backButton.setBackground(new Color(169, 169, 169)); // darker gray
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                backButton.setBackground(lightGray);
+            }
+        });
+
         // ==========================================
         // STEP 8: REGISTER BUTTON ACTION LISTENER
         // This code runs when the user clicks "Register Account"
