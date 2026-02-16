@@ -87,6 +87,7 @@ public class LoginScreen {
         JPasswordField password = new JPasswordField();
         password.setBounds(100, 170, 200, 30);
         password.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        password.setBorder(BorderFactory.createLineBorder(borderGray,1));
         loginframe.add(password);
 
         // ==========================================
