@@ -29,3 +29,6 @@
 4. **No password recovery** - If you forget password, account is lost
 5. **Single computer only** - Data stored locally 
  I will be looking forward into improving it day by day.
+
+
+**DAY 14** I have decided to update it more in appearance by changing colors and fonts. I seem to have made some mistakes by using git and mixing two different branches main and master. I tried to commit and push but i didnt know how to pull request into my main one so now my main goal is to fix it and keep it simple by just updating code from my main branch not the master branch.
