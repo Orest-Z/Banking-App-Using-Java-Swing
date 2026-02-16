@@ -150,7 +150,7 @@ public class LoginScreen {
         // Helpful text below the button
         JLabel hintLabel = new JLabel("Don't have an account?", SwingConstants.CENTER);
         hintLabel.setBounds(100, 325, 200, 20);
-        hintLabel.setFont(new Font("SansSerif", Font.ITALIC, 12));
+        hintLabel.setFont(smallFont);
         hintLabel.setForeground(Color.DARK_GRAY);
         loginframe.add(hintLabel);
 
