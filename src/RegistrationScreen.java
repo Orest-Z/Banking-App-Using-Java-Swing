@@ -127,7 +127,7 @@ public class RegistrationScreen {
         
         JLabel confirmPasswordLabel = new JLabel("Confirm Password:");
         confirmPasswordLabel.setBounds(80, 280, 200, 30);
-        confirmPasswordLabel.setFont(smallFont);
+        confirmPasswordLabel.setFont(labelFont);
         confirmPasswordLabel.setForeground(mutedPurple);
         registerFrame.add(confirmPasswordLabel);
         

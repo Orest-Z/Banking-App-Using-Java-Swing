@@ -6,24 +6,35 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-/**
- * BankingApp.java (UPDATED VERSION)
- * 
- * This is your main banking application with ONE IMPORTANT UPDATE:
- * - Now reads user data files that contain "PASSWORD:hash" on the first line
- * - Everything else remains the same as your original version!
- */
 public class BankingApp {
     private final String username;
     private double balance = 0.0;
     private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+    // COLORS
+    Color softCream = new Color(255, 253, 208);
+    Color darkIndigo = new Color(75, 0, 130);
+    Color charcoalGray = new Color(51, 51, 51);
+    Color mutedPurple = new Color(106, 13, 173);
+    Color forestGreen = new Color(34, 139, 34);
+    Color crimsonRed = new Color(220, 53, 69);
+    Color goldenYellow = new Color(255, 193, 7);
+    Color skyBlue = new Color(33, 150, 243);
+    Color borderGray = new Color(200, 200, 200);
+    Color logoutOrange = new Color(255, 152, 0);
 
+    // FONTS
+    Font headerFont = new Font("Segoe UI", Font.BOLD, 20);
+    Font labelFont = new Font("Segoe UI", Font.BOLD, 16);
+    Font inputFont = new Font("Segoe UI", Font.PLAIN, 14);
+    Font buttonFont = new Font("Segoe UI", Font.BOLD, 14);
+    Font smallFont = new Font("Segoe UI", Font.PLAIN, 12);
+    Font historyFont = new Font("Segoe UI", Font.PLAIN, 11);
     public BankingApp(String user) {
         this.username = user;
 
-        JFrame frame = new JFrame("Banking App v2.0 - Secure Edition");
+        JFrame frame = new JFrame("Banking App v2.2");
         frame.setSize(450, 600);
-        frame.getContentPane().setBackground(Color.decode("#FFEF5F"));
+        frame.getContentPane().setBackground(softCream);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
 
@@ -33,8 +44,8 @@ public class BankingApp {
         
         JLabel timeLabel = new JLabel();
         timeLabel.setBounds(250, 10, 180, 30);
-        timeLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
-        timeLabel.setForeground(Color.decode("#4D2B8C"));
+        timeLabel.setFont(smallFont);
+        timeLabel.setForeground(mutedPurple);
         frame.add(timeLabel);
 
         Timer timer = new Timer(1000, new ActionListener() {
@@ -51,8 +62,8 @@ public class BankingApp {
         // ==========================================
         
         JLabel welcomeLabel = new JLabel("Welcome, " + username);
-        welcomeLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
-        welcomeLabel.setForeground(Color.decode("#4D2B8C"));
+        welcomeLabel.setFont(labelFont);
+        welcomeLabel.setForeground(darkIndigo);
         welcomeLabel.setBounds(50, 5, 200, 30);
         frame.add(welcomeLabel);
 
@@ -62,8 +73,8 @@ public class BankingApp {
         
         JLabel label = new JLabel("Balance: $0.0");
         label.setBounds(50, 30, 200, 30);
-        label.setFont(new Font("SansSerif", Font.BOLD, 20));
-        label.setForeground(Color.decode("#4D2B8C"));
+        label.setFont(headerFont);
+        label.setForeground(darkIndigo);
         frame.add(label);
 
         // ==========================================
@@ -72,6 +83,13 @@ public class BankingApp {
         
         JTextField input = new JTextField();
         input.setBounds(50, 70, 150, 30);
+        input.setFont(inputFont);
+        input.setForeground(charcoalGray);
+        input.setBackground(Color.WHITE);
+        input.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(borderGray, 1),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        ));
         frame.add(input);
 
         // ==========================================
@@ -79,24 +97,164 @@ public class BankingApp {
         // ==========================================
         
         JButton depositBtn = new JButton("Deposit");
+        depositBtn.setFont(buttonFont);
         depositBtn.setBounds(50, 110, 100, 30);
-        depositBtn.setBackground(Color.green);
+        depositBtn.setBackground(forestGreen);
+        depositBtn.setForeground(Color.WHITE);
+        depositBtn.setFocusPainted(false);
         frame.add(depositBtn);
+        depositBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                depositBtn.setBackground(new Color(46, 184, 46));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                depositBtn.setBackground(forestGreen);
+            }
+        });
 
         JButton withdrawBtn = new JButton("Withdraw");
         withdrawBtn.setBounds(160, 110, 100, 30);
-        withdrawBtn.setBackground(Color.red);
+        withdrawBtn.setBackground(crimsonRed);
+        withdrawBtn.setForeground(Color.WHITE);
+        withdrawBtn.setFont(buttonFont);
+        withdrawBtn.setFocusPainted(false);
         frame.add(withdrawBtn);
+        withdrawBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                withdrawBtn.setBackground(new Color(244, 67, 54));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                withdrawBtn.setBackground(crimsonRed);
+            }
+        });
 
         JButton DownloadHistory = new JButton("Download History");
         DownloadHistory.setBounds(270, 110, 150, 30);
-        DownloadHistory.setBackground(Color.decode("#EEA727"));
+        DownloadHistory.setBackground(goldenYellow);
+        DownloadHistory.setForeground(charcoalGray);
+        DownloadHistory.setFont(buttonFont);
+        DownloadHistory.setFocusPainted(false);
         frame.add(DownloadHistory);
+        DownloadHistory.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                DownloadHistory.setBackground(new Color(255, 213, 79));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                DownloadHistory.setBackground(goldenYellow);
+            }
+        });
 
         JButton saveBtn = new JButton("Save");
         saveBtn.setBounds(270, 145, 150, 30);
-        saveBtn.setBackground(Color.CYAN);
+        saveBtn.setFont(buttonFont);
+        saveBtn.setBackground(skyBlue);
+        saveBtn.setForeground(Color.WHITE);
+        saveBtn.setFocusPainted(false);
         frame.add(saveBtn);
+        // Hover effects
+        saveBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                saveBtn.setBackground(new Color(66, 165, 245));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                saveBtn.setBackground(skyBlue);
+            }
+        });
+
+        // ==========================================
+// LOGOUT BUTTON (Back to Login Screen)
+// ==========================================
+
+        JButton logoutButton = new JButton("Logout");
+        logoutButton.setBounds(50, 500, 150, 35);
+        logoutButton.setFont(buttonFont);
+        logoutButton.setBackground(logoutOrange);
+        logoutButton.setForeground(Color.WHITE);
+        logoutButton.setFocusPainted(false);
+        frame.add(logoutButton);
+
+// Hover effect
+        logoutButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                logoutButton.setBackground(new Color(255, 183, 77));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                logoutButton.setBackground(logoutOrange);
+            }
+        });
+
+// Action listener
+        logoutButton.addActionListener(e -> {
+            int confirm = JOptionPane.showConfirmDialog(
+                    frame,
+                    "Do you want to save before logging out?",
+                    "Logout Confirmation",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                // Trigger the existing Save button
+                saveBtn.doClick();
+
+                // Close and go to login
+                frame.dispose();
+                new LoginScreen();
+
+            } else if (confirm == JOptionPane.NO_OPTION) {
+                // Logout without saving
+                frame.dispose();
+                new LoginScreen();
+            }
+            // If CANCEL, do nothing
+        });
+        // ==========================================
+// EXIT BUTTON (Quit Application)
+// ==========================================
+
+        JButton exitButton = new JButton("Exit");
+        exitButton.setBounds(210, 500, 150, 35);
+        exitButton.setFont(buttonFont);
+        exitButton.setBackground(new Color(158, 158, 158)); // Gray
+        exitButton.setForeground(Color.WHITE);
+        exitButton.setFocusPainted(false);
+        frame.add(exitButton);
+
+// Hover effect
+        exitButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                exitButton.setBackground(new Color(117, 117, 117));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                exitButton.setBackground(new Color(158, 158, 158));
+            }
+        });
+
+// Action listener
+        exitButton.addActionListener(e -> {
+            int confirm = JOptionPane.showConfirmDialog(
+                    frame,
+                    "Do you want to save before exiting?",
+                    "Exit Confirmation",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.WARNING_MESSAGE
+            );
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                // Trigger the existing Save button
+                saveBtn.doClick();
+
+                // Wait a moment for save to complete, then exit
+                Timer exitTimer = new Timer(500, evt -> System.exit(0));
+                exitTimer.setRepeats(false);
+                exitTimer.start();
+
+            } else if (confirm == JOptionPane.NO_OPTION) {
+                // Exit without saving
+                System.exit(0);
+            }
+            // If CANCEL, do nothing
+        });
 
         // ==========================================
         // TRANSACTION HISTORY DISPLAY
@@ -104,11 +262,15 @@ public class BankingApp {
         
         JLabel historyTitle = new JLabel("Transaction History:");
         historyTitle.setBounds(50, 160, 200, 30);
+        historyTitle.setFont(labelFont);
+        historyTitle.setForeground(darkIndigo);
         frame.add(historyTitle);
 
         JTextArea historyLog = new JTextArea();
         historyLog.setEditable(false);
-        historyLog.setFont(new Font("Monospaced", Font.BOLD, 12));
+        historyLog.setFont(historyFont);
+        historyLog.setForeground(charcoalGray);
+        historyLog.setBackground(Color.WHITE);
 
         JScrollPane scrollPane = new JScrollPane(historyLog);
         scrollPane.setBounds(50, 190, 330, 300);
