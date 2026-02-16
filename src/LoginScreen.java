@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -40,6 +41,14 @@ public class LoginScreen {
         Color errorRed = new Color(220, 53, 69);         // Error messages
         Color borderGray = new Color(200, 200, 200);     // Input field borders
 
+        // FONTS
+        Font headerFont = new Font("Segoe UI", Font.BOLD, 28);      // Title
+        Font labelFont = new Font("Segoe UI", Font.BOLD, 18);       // Labels
+        Font inputFont = new Font("Segoe UI", Font.PLAIN, 14);      // Text fields
+        Font buttonFont = new Font("Segoe UI", Font.BOLD, 16);      // Buttons
+        Font smallFont = new Font("Segoe UI", Font.ITALIC, 12);     // Hints
+
+
         JFrame loginframe = new JFrame("Login Screen");
         loginframe.setSize(400, 450); // Made slightly taller to fit the new button
         loginframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,9 +59,9 @@ public class LoginScreen {
         // ==========================================
         // STEP 2: TITLE LABEL
         // ==========================================
-        
+
         JLabel title = new JLabel("WELCOME BACK", SwingConstants.CENTER);
-        title.setFont(new Font("Times New Roman", Font.BOLD, 25));
+        title.setFont(headerFont);
         title.setForeground(darkIndigo);
         title.setBounds(0, 10, 400, 40);
         loginframe.add(title);
@@ -65,13 +74,16 @@ public class LoginScreen {
         loginlabel.setBounds(100, 60, 200, 30);
         loginlabel.setForeground(mutedPurple);
         loginframe.add(loginlabel);
-        loginlabel.setFont(new Font("SansSerif", Font.BOLD, 20));
+        loginlabel.setFont(labelFont);
 
         JTextField username = new JTextField();
         username.setForeground(charcoalGray);
         username.setBounds(100, 90, 200, 30);
-        username.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        username.setBorder(BorderFactory.createLineBorder(borderGray,1));
+        username.setFont(inputFont);
+        username.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(borderGray, 1),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        ));
         loginframe.add(username);
 
         // ==========================================
@@ -79,15 +91,18 @@ public class LoginScreen {
         // ==========================================
         
         JLabel loginPassword = new JLabel("Enter Password:");
-        loginPassword.setFont(new Font("SansSerif", Font.BOLD, 20));
+        loginPassword.setFont(labelFont);
         loginPassword.setBounds(100, 140, 200, 30);
         loginPassword.setForeground(mutedPurple);
         loginframe.add(loginPassword);
 
         JPasswordField password = new JPasswordField();
         password.setBounds(100, 170, 200, 30);
-        password.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        password.setBorder(BorderFactory.createLineBorder(borderGray,1));
+        password.setFont(inputFont);
+        password.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(borderGray, 1),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        ));
         loginframe.add(password);
 
         // ==========================================
@@ -96,8 +111,8 @@ public class LoginScreen {
         
         JButton loginbutton = new JButton("Login");
         loginbutton.setBounds(100, 230, 200, 40);
-        loginbutton.setFont(new Font("SansSerif", Font.BOLD, 16));
-        loginbutton.setBackground(Color.decode("#4CAF50"));
+        loginbutton.setFont(buttonFont);
+        loginbutton.setBackground(forestGreen);
         loginbutton.setForeground(Color.WHITE);
         loginbutton.setFocusPainted(false);
         loginframe.add(loginbutton);
@@ -108,8 +123,8 @@ public class LoginScreen {
         
         JButton createAccountButton = new JButton("Create New Account");
         createAccountButton.setBounds(100, 280, 200, 40);
-        createAccountButton.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        createAccountButton.setBackground(Color.decode("#2196F3")); // Blue color
+        createAccountButton.setFont(buttonFont);
+        createAccountButton.setBackground(royalBlue); // Blue color
         createAccountButton.setForeground(Color.WHITE);
         createAccountButton.setFocusPainted(false);
         loginframe.add(createAccountButton);
