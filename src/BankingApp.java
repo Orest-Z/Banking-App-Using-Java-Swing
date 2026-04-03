@@ -355,7 +355,16 @@ public class BankingApp {
         
         saveBtn.addActionListener(e -> {
             try {
-                File userFile = new File(username + "_data.txt");
+                // 1. Get the path from IntelliJ
+                String envPath = System.getenv("HISTORY_PATH");
+                File userFile;
+
+                // 2. Simple if-else to pick the right file
+                if (envPath != null) {
+                    userFile = new File(envPath);
+                } else {
+                    userFile = new File("data/" + username + "_data.txt");
+                }
                 FileWriter fw = new FileWriter(userFile);
                 PrintWriter pw = new PrintWriter(fw);
                 
@@ -396,9 +405,14 @@ public class BankingApp {
         // ==========================================
         // LOAD USER DATA ON STARTUP (UPDATED!)
         // ==========================================
-        
-        File file = new File(username + "_data.txt");
 
+        String envPath = System.getenv("HISTORY_PATH");
+        File file;
+        if (envPath != null) {
+            file = new File(envPath); // Use the path you set in IntelliJ
+        } else {
+            file = new File("data/" + username + "_data.txt"); // Fallback to the data folder
+        }
         if (file.exists()) {
             try {
                 Scanner sc = new Scanner(file);
