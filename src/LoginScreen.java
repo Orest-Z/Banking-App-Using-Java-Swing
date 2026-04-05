@@ -1,3 +1,5 @@
+import com.formdev.flatlaf.FlatDarkLaf;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -343,6 +345,7 @@ public class LoginScreen {
      */
     public static void main(String[] args) {
         // Always run Swing applications on the Event Dispatch Thread
+
         SwingUtilities.invokeLater(() -> new LoginScreen());
     }
 }

@@ -1,3 +1,5 @@
+import com.formdev.flatlaf.FlatDarkLaf;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -41,7 +43,7 @@ public class BankingApp {
         // ==========================================
         // LIVE CLOCK
         // ==========================================
-        
+
         JLabel timeLabel = new JLabel();
         timeLabel.setBounds(250, 10, 180, 30);
         timeLabel.setFont(smallFont);
@@ -57,10 +59,35 @@ public class BankingApp {
         });
         timer.start();
 
+        //==========================================
+        //MENU BAR
+        //=========================================
+        JMenuBar menuBar = new JMenuBar();
+        JMenu fileMenu = new JMenu("File");
+        JMenuItem saveItem = new JMenuItem("Save Data");
+        JMenuItem downloadItem = new JMenuItem("Download Statement");
+        JMenuItem exitItem = new JMenuItem("Exit");
+        fileMenu.add(saveItem);
+        fileMenu.add(downloadItem);
+        fileMenu.addSeparator();
+        fileMenu.add(exitItem);
+
+        JMenu accountMenu = new JMenu("Account");
+        JMenuItem logoutItem = new JMenuItem("Logout");
+        JMenuItem profileItem = new JMenuItem("View Profile");
+        accountMenu.add(profileItem);
+        accountMenu.addSeparator();
+        accountMenu.add(logoutItem);
+
+        // Add menus to bar
+        menuBar.add(fileMenu);
+        menuBar.add(accountMenu);
+        frame.setJMenuBar(menuBar);
+
         // ==========================================
         // WELCOME LABEL
         // ==========================================
-        
+
         JLabel welcomeLabel = new JLabel("Welcome, " + username);
         welcomeLabel.setFont(labelFont);
         welcomeLabel.setForeground(darkIndigo);
@@ -70,7 +97,7 @@ public class BankingApp {
         // ==========================================
         // BALANCE DISPLAY
         // ==========================================
-        
+
         JLabel label = new JLabel("Balance: $0.0");
         label.setBounds(50, 30, 200, 30);
         label.setFont(headerFont);
@@ -80,7 +107,7 @@ public class BankingApp {
         // ==========================================
         // AMOUNT INPUT FIELD
         // ==========================================
-        
+
         JTextField input = new JTextField();
         input.setBounds(50, 70, 150, 30);
         input.setFont(inputFont);
@@ -95,7 +122,7 @@ public class BankingApp {
         // ==========================================
         // BUTTONS
         // ==========================================
-        
+
         JButton depositBtn = new JButton("Deposit");
         depositBtn.setFont(buttonFont);
         depositBtn.setBounds(50, 110, 100, 30);
@@ -259,7 +286,7 @@ public class BankingApp {
         // ==========================================
         // TRANSACTION HISTORY DISPLAY
         // ==========================================
-        
+
         JLabel historyTitle = new JLabel("Transaction History:");
         historyTitle.setBounds(50, 160, 200, 30);
         historyTitle.setFont(labelFont);
@@ -279,7 +306,7 @@ public class BankingApp {
         // ==========================================
         // DEPOSIT BUTTON LOGIC
         // ==========================================
-        
+
         depositBtn.addActionListener(e -> {
             try {
                 double amount = Double.parseDouble(input.getText());
@@ -302,7 +329,7 @@ public class BankingApp {
         // ==========================================
         // WITHDRAW BUTTON LOGIC
         // ==========================================
-        
+
         withdrawBtn.addActionListener(event -> {
             try {
                 double amount = Double.parseDouble(input.getText());
@@ -329,7 +356,7 @@ public class BankingApp {
         // ==========================================
         // DOWNLOAD HISTORY BUTTON LOGIC
         // ==========================================
-        
+
         DownloadHistory.addActionListener(e -> {
             try {
                 FileWriter fw = new FileWriter("bankstatement.txt");
@@ -352,7 +379,7 @@ public class BankingApp {
         // ==========================================
         // SAVE BUTTON LOGIC (UPDATED!)
         // ==========================================
-        
+
         saveBtn.addActionListener(e -> {
             try {
                 // 1. Get the path from IntelliJ
@@ -367,7 +394,7 @@ public class BankingApp {
                 }
                 FileWriter fw = new FileWriter(userFile);
                 PrintWriter pw = new PrintWriter(fw);
-                
+
                 // IMPORTANT: We need to preserve the PASSWORD line!
                 // First, read the existing password hash from the file
                 String passwordLine = "";
@@ -381,18 +408,18 @@ public class BankingApp {
                     }
                     sc.close();
                 }
-                
+
                 // If we found a password line, write it first
                 if (!passwordLine.isEmpty()) {
                     pw.println(passwordLine);
                 }
-                
+
                 // Write the balance
                 pw.println(balance);
-                
+
                 // Write the transaction history
                 pw.print(historyLog.getText());
-                
+
                 pw.close();
                 fw.close();
 
@@ -422,12 +449,12 @@ public class BankingApp {
                 // -----------------------------------
                 if (sc.hasNextLine()) {
                     String firstLine = sc.nextLine();
-                    
+
                     // Check if it's a password line (new format)
                     if (firstLine.startsWith("PASSWORD:")) {
                         // This is the new format, skip this line
                         // The next line will be the balance
-                        
+
                         if (sc.hasNextLine()) {
                             String balanceLine = sc.nextLine();
                             balance = Double.parseDouble(balanceLine.trim());
@@ -449,7 +476,7 @@ public class BankingApp {
                 }
 
                 sc.close();
-                
+
             } catch (FileNotFoundException e) {
                 System.out.println("File not found, starting fresh.");
             } catch (NumberFormatException e) {
@@ -461,10 +488,20 @@ public class BankingApp {
             balance = 0.0;
         }
 
+        saveItem.addActionListener(e -> saveBtn.doClick());
+        downloadItem.addActionListener(e -> DownloadHistory.doClick());
+        exitItem.addActionListener(e -> exitButton.doClick());
+        logoutItem.addActionListener(e -> logoutButton.doClick());
+
+        profileItem.addActionListener(e -> {
+            JOptionPane.showMessageDialog(frame, "User: " + username + "\nAccount Type: Student Checking", "Profile", JOptionPane.INFORMATION_MESSAGE);
+        });
+
+
         // ==========================================
         // SHOW THE WINDOW
         // ==========================================
-        
+
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
