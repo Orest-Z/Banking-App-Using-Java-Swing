@@ -34,8 +34,8 @@ public class BankingApp {
     public BankingApp(String user) {
         this.username = user;
 
-        JFrame frame = new JFrame("Banking App v2.2");
-        frame.setSize(450, 600);
+        JFrame frame = new JFrame("Banking App v2.3");
+        frame.setSize(500, 650);
         frame.getContentPane().setBackground(softCream);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
@@ -45,7 +45,7 @@ public class BankingApp {
         // ==========================================
 
         JLabel timeLabel = new JLabel();
-        timeLabel.setBounds(250, 10, 180, 30);
+        timeLabel.setBounds(280, 10, 200, 30);
         timeLabel.setFont(smallFont);
         timeLabel.setForeground(mutedPurple);
         frame.add(timeLabel);
@@ -108,8 +108,14 @@ public class BankingApp {
         // AMOUNT INPUT FIELD
         // ==========================================
 
+        JLabel amountLabel = new JLabel("Amount ($):");
+        amountLabel.setBounds(50, 70, 120, 20);
+        amountLabel.setFont(labelFont);
+        amountLabel.setForeground(charcoalGray);
+        frame.add(amountLabel);
+
         JTextField input = new JTextField();
-        input.setBounds(50, 70, 150, 30);
+        input.setBounds(50, 92, 180, 32);
         input.setFont(inputFont);
         input.setForeground(charcoalGray);
         input.setBackground(Color.WHITE);
@@ -119,13 +125,30 @@ public class BankingApp {
         ));
         frame.add(input);
 
+        JLabel recipientLabel = new JLabel("Transfer to (Username):");
+        recipientLabel.setBounds(250, 70, 200, 20);
+        recipientLabel.setFont(labelFont);
+        recipientLabel.setForeground(charcoalGray);
+        frame.add(recipientLabel);
+
+        JTextField recipientInput = new JTextField();
+        recipientInput.setBounds(250, 92, 200, 32);
+        recipientInput.setFont(inputFont);
+        recipientInput.setForeground(charcoalGray);
+        recipientInput.setBackground(Color.WHITE);
+        recipientInput.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(borderGray, 1),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        ));
+        frame.add(recipientInput);
+
         // ==========================================
         // BUTTONS
         // ==========================================
 
         JButton depositBtn = new JButton("Deposit");
         depositBtn.setFont(buttonFont);
-        depositBtn.setBounds(50, 110, 100, 30);
+        depositBtn.setBounds(30, 140, 140, 36);
         depositBtn.setBackground(forestGreen);
         depositBtn.setForeground(Color.WHITE);
         depositBtn.setFocusPainted(false);
@@ -140,7 +163,7 @@ public class BankingApp {
         });
 
         JButton withdrawBtn = new JButton("Withdraw");
-        withdrawBtn.setBounds(160, 110, 100, 30);
+        withdrawBtn.setBounds(180, 140, 140, 36);
         withdrawBtn.setBackground(crimsonRed);
         withdrawBtn.setForeground(Color.WHITE);
         withdrawBtn.setFont(buttonFont);
@@ -155,132 +178,20 @@ public class BankingApp {
             }
         });
 
-        JButton DownloadHistory = new JButton("Download History");
-        DownloadHistory.setBounds(270, 110, 150, 30);
-        DownloadHistory.setBackground(goldenYellow);
-        DownloadHistory.setForeground(charcoalGray);
-        DownloadHistory.setFont(buttonFont);
-        DownloadHistory.setFocusPainted(false);
-        frame.add(DownloadHistory);
-        DownloadHistory.addMouseListener(new java.awt.event.MouseAdapter() {
+        JButton transferBtn = new JButton("Transfer");
+        transferBtn.setBounds(330, 140, 140, 36);
+        transferBtn.setBackground(skyBlue);
+        transferBtn.setForeground(Color.WHITE);
+        transferBtn.setFont(buttonFont);
+        transferBtn.setFocusPainted(false);
+        frame.add(transferBtn);
+        transferBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                DownloadHistory.setBackground(new Color(255, 213, 79));
+                transferBtn.setBackground(new Color(66, 165, 245));
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                DownloadHistory.setBackground(goldenYellow);
+                transferBtn.setBackground(skyBlue);
             }
-        });
-
-        JButton saveBtn = new JButton("Save");
-        saveBtn.setBounds(270, 145, 150, 30);
-        saveBtn.setFont(buttonFont);
-        saveBtn.setBackground(skyBlue);
-        saveBtn.setForeground(Color.WHITE);
-        saveBtn.setFocusPainted(false);
-        frame.add(saveBtn);
-        // Hover effects
-        saveBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                saveBtn.setBackground(new Color(66, 165, 245));
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                saveBtn.setBackground(skyBlue);
-            }
-        });
-
-        // ==========================================
-// LOGOUT BUTTON (Back to Login Screen)
-// ==========================================
-
-        JButton logoutButton = new JButton("Logout");
-        logoutButton.setBounds(50, 500, 150, 35);
-        logoutButton.setFont(buttonFont);
-        logoutButton.setBackground(logoutOrange);
-        logoutButton.setForeground(Color.WHITE);
-        logoutButton.setFocusPainted(false);
-        frame.add(logoutButton);
-
-// Hover effect
-        logoutButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                logoutButton.setBackground(new Color(255, 183, 77));
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                logoutButton.setBackground(logoutOrange);
-            }
-        });
-
-// Action listener
-        logoutButton.addActionListener(e -> {
-            int confirm = JOptionPane.showConfirmDialog(
-                    frame,
-                    "Do you want to save before logging out?",
-                    "Logout Confirmation",
-                    JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.QUESTION_MESSAGE
-            );
-
-            if (confirm == JOptionPane.YES_OPTION) {
-                // Trigger the existing Save button
-                saveBtn.doClick();
-
-                // Close and go to login
-                frame.dispose();
-                new LoginScreen();
-
-            } else if (confirm == JOptionPane.NO_OPTION) {
-                // Logout without saving
-                frame.dispose();
-                new LoginScreen();
-            }
-            // If CANCEL, do nothing
-        });
-        // ==========================================
-// EXIT BUTTON (Quit Application)
-// ==========================================
-
-        JButton exitButton = new JButton("Exit");
-        exitButton.setBounds(210, 500, 150, 35);
-        exitButton.setFont(buttonFont);
-        exitButton.setBackground(new Color(158, 158, 158)); // Gray
-        exitButton.setForeground(Color.WHITE);
-        exitButton.setFocusPainted(false);
-        frame.add(exitButton);
-
-// Hover effect
-        exitButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                exitButton.setBackground(new Color(117, 117, 117));
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                exitButton.setBackground(new Color(158, 158, 158));
-            }
-        });
-
-// Action listener
-        exitButton.addActionListener(e -> {
-            int confirm = JOptionPane.showConfirmDialog(
-                    frame,
-                    "Do you want to save before exiting?",
-                    "Exit Confirmation",
-                    JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.WARNING_MESSAGE
-            );
-
-            if (confirm == JOptionPane.YES_OPTION) {
-                // Trigger the existing Save button
-                saveBtn.doClick();
-
-                // Wait a moment for save to complete, then exit
-                Timer exitTimer = new Timer(500, evt -> System.exit(0));
-                exitTimer.setRepeats(false);
-                exitTimer.start();
-
-            } else if (confirm == JOptionPane.NO_OPTION) {
-                // Exit without saving
-                System.exit(0);
-            }
-            // If CANCEL, do nothing
         });
 
         // ==========================================
@@ -288,7 +199,7 @@ public class BankingApp {
         // ==========================================
 
         JLabel historyTitle = new JLabel("Transaction History:");
-        historyTitle.setBounds(50, 160, 200, 30);
+        historyTitle.setBounds(30, 192, 220, 24);
         historyTitle.setFont(labelFont);
         historyTitle.setForeground(darkIndigo);
         frame.add(historyTitle);
@@ -300,7 +211,7 @@ public class BankingApp {
         historyLog.setBackground(Color.WHITE);
 
         JScrollPane scrollPane = new JScrollPane(historyLog);
-        scrollPane.setBounds(50, 190, 330, 300);
+        scrollPane.setBounds(30, 220, 440, 370);
         frame.add(scrollPane);
 
         // ==========================================
@@ -354,49 +265,50 @@ public class BankingApp {
         });
 
         // ==========================================
-        // DOWNLOAD HISTORY BUTTON LOGIC
+        // TRANSFER BUTTON LOGIC
         // ==========================================
 
-        DownloadHistory.addActionListener(e -> {
+        transferBtn.addActionListener(e -> {
             try {
-                FileWriter fw = new FileWriter("bankstatement.txt");
-                PrintWriter pw = new PrintWriter(fw);
-                pw.println("==================================");
-                pw.println("      OFFICIAL BANK STATEMENT     ");
-                pw.println("      Date: " + LocalDateTime.now());
-                pw.println("==================================");
-                pw.println("");
-
-                pw.print(historyLog.getText());
-                pw.close();
-                fw.close();
-                JOptionPane.showMessageDialog(frame, "Bank Statement has been downloaded!");
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(frame, ex.getMessage());
+                double amount = Double.parseDouble(input.getText());
+                String recipient = recipientInput.getText().trim();
+                if (recipient.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Please enter a recipient username!");
+                    return;
+                }
+                if (amount <= 0) {
+                    JOptionPane.showMessageDialog(frame, "Amount must be positive!");
+                    return;
+                }
+                if (amount > balance) {
+                    JOptionPane.showMessageDialog(frame, "Insufficient balance!");
+                    return;
+                }
+                balance -= amount;
+                String logTime = LocalDateTime.now().format(dtf);
+                historyLog.append("[" + logTime + "] Transferred: $" + amount + " -> " + recipient + "\n");
+                label.setText("Balance: $" + balance);
+                input.setText("");
+                recipientInput.setText("");
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(frame, "Please enter a valid amount!");
             }
         });
 
         // ==========================================
-        // SAVE BUTTON LOGIC (UPDATED!)
+        // MENU BAR ACTIONS
         // ==========================================
 
-        saveBtn.addActionListener(e -> {
+        saveItem.addActionListener(e -> {
             try {
-                // 1. Get the path from IntelliJ
                 String envPath = System.getenv("HISTORY_PATH");
                 File userFile;
-
-                // 2. Simple if-else to pick the right file
                 if (envPath != null) {
                     userFile = new File(envPath);
                 } else {
                     userFile = new File("data/" + username + "_data.txt");
                 }
-                FileWriter fw = new FileWriter(userFile);
-                PrintWriter pw = new PrintWriter(fw);
 
-                // IMPORTANT: We need to preserve the PASSWORD line!
-                // First, read the existing password hash from the file
                 String passwordLine = "";
                 if (userFile.exists()) {
                     Scanner sc = new Scanner(userFile);
@@ -409,17 +321,13 @@ public class BankingApp {
                     sc.close();
                 }
 
-                // If we found a password line, write it first
+                FileWriter fw = new FileWriter(userFile);
+                PrintWriter pw = new PrintWriter(fw);
                 if (!passwordLine.isEmpty()) {
                     pw.println(passwordLine);
                 }
-
-                // Write the balance
                 pw.println(balance);
-
-                // Write the transaction history
                 pw.print(historyLog.getText());
-
                 pw.close();
                 fw.close();
 
@@ -429,48 +337,93 @@ public class BankingApp {
             }
         });
 
+        downloadItem.addActionListener(e -> {
+            try {
+                FileWriter fw = new FileWriter("bankstatement.txt");
+                PrintWriter pw = new PrintWriter(fw);
+                pw.println("==================================");
+                pw.println("      OFFICIAL BANK STATEMENT     ");
+                pw.println("      Date: " + LocalDateTime.now());
+                pw.println("==================================");
+                pw.println("");
+                pw.print(historyLog.getText());
+                pw.close();
+                fw.close();
+                JOptionPane.showMessageDialog(frame, "Bank Statement has been downloaded!");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(frame, ex.getMessage());
+            }
+        });
+
+        exitItem.addActionListener(e -> {
+            int confirm = JOptionPane.showConfirmDialog(
+                    frame,
+                    "Do you want to save before exiting?",
+                    "Exit Confirmation",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.WARNING_MESSAGE
+            );
+            if (confirm == JOptionPane.YES_OPTION) {
+                saveItem.getActionListeners()[0].actionPerformed(e);
+                Timer exitTimer = new Timer(500, evt -> System.exit(0));
+                exitTimer.setRepeats(false);
+                exitTimer.start();
+            } else if (confirm == JOptionPane.NO_OPTION) {
+                System.exit(0);
+            }
+        });
+
+        logoutItem.addActionListener(e -> {
+            int confirm = JOptionPane.showConfirmDialog(
+                    frame,
+                    "Do you want to save before logging out?",
+                    "Logout Confirmation",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
+            );
+            if (confirm == JOptionPane.YES_OPTION) {
+                saveItem.getActionListeners()[0].actionPerformed(e);
+                frame.dispose();
+                new LoginScreen();
+            } else if (confirm == JOptionPane.NO_OPTION) {
+                frame.dispose();
+                new LoginScreen();
+            }
+        });
+
+        profileItem.addActionListener(e -> {
+            JOptionPane.showMessageDialog(frame, "User: " + username + "\nAccount Type: Student Checking", "Profile", JOptionPane.INFORMATION_MESSAGE);
+        });
+
         // ==========================================
-        // LOAD USER DATA ON STARTUP (UPDATED!)
+        // LOAD USER DATA ON STARTUP
         // ==========================================
 
         String envPath = System.getenv("HISTORY_PATH");
         File file;
         if (envPath != null) {
-            file = new File(envPath); // Use the path you set in IntelliJ
+            file = new File(envPath);
         } else {
-            file = new File("data/" + username + "_data.txt"); // Fallback to the data folder
+            file = new File("data/" + username + "_data.txt");
         }
         if (file.exists()) {
             try {
                 Scanner sc = new Scanner(file);
 
-                // -----------------------------------
-                // LINE 1: Skip the PASSWORD line
-                // -----------------------------------
                 if (sc.hasNextLine()) {
                     String firstLine = sc.nextLine();
-
-                    // Check if it's a password line (new format)
                     if (firstLine.startsWith("PASSWORD:")) {
-                        // This is the new format, skip this line
-                        // The next line will be the balance
-
                         if (sc.hasNextLine()) {
                             String balanceLine = sc.nextLine();
                             balance = Double.parseDouble(balanceLine.trim());
                             label.setText("Balance: $" + balance);
                         }
                     } else {
-                        // This is the old format (no PASSWORD line)
-                        // This line IS the balance
                         balance = Double.parseDouble(firstLine.trim());
                         label.setText("Balance: $" + balance);
                     }
                 }
 
-                // -----------------------------------
-                // REMAINING LINES: Transaction history
-                // -----------------------------------
                 while (sc.hasNextLine()) {
                     historyLog.append(sc.nextLine() + "\n");
                 }
@@ -484,19 +437,8 @@ public class BankingApp {
                 balance = 0.0;
             }
         } else {
-            // File doesn't exist, this is a new account
             balance = 0.0;
         }
-
-        saveItem.addActionListener(e -> saveBtn.doClick());
-        downloadItem.addActionListener(e -> DownloadHistory.doClick());
-        exitItem.addActionListener(e -> exitButton.doClick());
-        logoutItem.addActionListener(e -> logoutButton.doClick());
-
-        profileItem.addActionListener(e -> {
-            JOptionPane.showMessageDialog(frame, "User: " + username + "\nAccount Type: Student Checking", "Profile", JOptionPane.INFORMATION_MESSAGE);
-        });
-
 
         // ==========================================
         // SHOW THE WINDOW
