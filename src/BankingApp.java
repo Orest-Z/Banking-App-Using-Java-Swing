@@ -31,6 +31,7 @@ public class BankingApp {
     Font buttonFont = new Font("Segoe UI", Font.BOLD, 14);
     Font smallFont = new Font("Segoe UI", Font.PLAIN, 12);
     Font historyFont = new Font("Segoe UI", Font.PLAIN, 11);
+
     public BankingApp(String user) {
         this.username = user;
 
@@ -60,8 +61,8 @@ public class BankingApp {
         timer.start();
 
         //==========================================
-        //MENU BAR
-        //=========================================
+        // MENU BAR
+        //==========================================
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
         JMenuItem saveItem = new JMenuItem("Save Data");
@@ -75,14 +76,44 @@ public class BankingApp {
         JMenu accountMenu = new JMenu("Account");
         JMenuItem logoutItem = new JMenuItem("Logout");
         JMenuItem profileItem = new JMenuItem("View Profile");
+        JMenuItem changePasswordItem = new JMenuItem("Change Password");
+        JMenuItem settingsItem = new JMenuItem("Settings");
         accountMenu.add(profileItem);
+        accountMenu.add(changePasswordItem);
+        accountMenu.add(settingsItem);
         accountMenu.addSeparator();
         accountMenu.add(logoutItem);
 
-        // Add menus to bar
+        JMenu helpMenu = new JMenu("Help");
+        JMenuItem aboutItem = new JMenuItem("About");
+        JMenuItem faqItem = new JMenuItem("FAQ");
+        JMenuItem contactItem = new JMenuItem("Contact Support");
+        helpMenu.add(aboutItem);
+        helpMenu.add(faqItem);
+        helpMenu.addSeparator();
+        helpMenu.add(contactItem);
+
         menuBar.add(fileMenu);
         menuBar.add(accountMenu);
+        menuBar.add(helpMenu);
         frame.setJMenuBar(menuBar);
+
+        // Help menu actions (placeholder for now)
+        aboutItem.addActionListener(e -> JOptionPane.showMessageDialog(frame,
+                "Banking App v2.3\nDeveloped for educational purposes.\n\nMore info coming soon.",
+                "About", JOptionPane.INFORMATION_MESSAGE));
+
+        faqItem.addActionListener(e -> JOptionPane.showMessageDialog(frame,
+                "FAQ\n\n" +
+                        "Q: How do I deposit money?\nA: Enter an amount in the Amount field and click Deposit.\n\n" +
+                        "Q: How do I transfer to another user?\nA: Enter amount, type the recipient's username, click Transfer.\n\n" +
+                        "Q: How do I save my data?\nA: Use File > Save Data or it will prompt you on logout/exit.\n\n" +
+                        "More FAQs coming soon.",
+                "FAQ", JOptionPane.INFORMATION_MESSAGE));
+
+        contactItem.addActionListener(e -> JOptionPane.showMessageDialog(frame,
+                "Contact Support\n\nEmail: support@bankingapp.com\nPhone: +1 (555) 000-0000\n\nSupport hours: Mon-Fri, 9AM - 5PM",
+                "Contact Support", JOptionPane.INFORMATION_MESSAGE));
 
         // ==========================================
         // WELCOME LABEL
@@ -143,7 +174,7 @@ public class BankingApp {
         frame.add(recipientInput);
 
         // ==========================================
-        // BUTTONS
+        // ACTION BUTTONS
         // ==========================================
 
         JButton depositBtn = new JButton("Deposit");
@@ -226,10 +257,8 @@ public class BankingApp {
                     return;
                 }
                 balance += amount;
-
                 String logTime = LocalDateTime.now().format(dtf);
                 historyLog.append("[" + logTime + "] Deposited: $" + amount + "\n");
-
                 label.setText("Balance: $" + balance);
                 input.setText("");
             } catch (Exception ex) {
@@ -250,10 +279,8 @@ public class BankingApp {
                         return;
                     }
                     balance -= amount;
-
                     String logTime = LocalDateTime.now().format(dtf);
                     historyLog.append("[" + logTime + "] Withdrew:  $" + amount + "\n");
-
                     label.setText("Balance: $" + balance);
                 } else {
                     JOptionPane.showMessageDialog(frame, "Balance is too low!");
@@ -265,15 +292,26 @@ public class BankingApp {
         });
 
         // ==========================================
-        // TRANSFER BUTTON LOGIC
+        // TRANSFER BUTTON LOGIC (with recipient validation)
         // ==========================================
 
         transferBtn.addActionListener(e -> {
             try {
                 double amount = Double.parseDouble(input.getText());
                 String recipient = recipientInput.getText().trim();
+
                 if (recipient.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "Please enter a recipient username!");
+                    return;
+                }
+                if (recipient.equalsIgnoreCase(username)) {
+                    JOptionPane.showMessageDialog(frame, "You cannot transfer funds to yourself!");
+                    return;
+                }
+                if (!LoginScreen.userExists(recipient)) {
+                    JOptionPane.showMessageDialog(frame,
+                            "User \"" + recipient + "\" is not registered in the system.\nPlease check the username and try again.",
+                            "Recipient Not Found", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if (amount <= 0) {
@@ -284,6 +322,14 @@ public class BankingApp {
                     JOptionPane.showMessageDialog(frame, "Insufficient balance!");
                     return;
                 }
+
+                // Confirm before transferring
+                int confirm = JOptionPane.showConfirmDialog(frame,
+                        "Transfer $" + amount + " to " + recipient + "?\nYour new balance will be: $" + (balance - amount),
+                        "Confirm Transfer", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+                if (confirm != JOptionPane.YES_OPTION) return;
+
                 balance -= amount;
                 String logTime = LocalDateTime.now().format(dtf);
                 historyLog.append("[" + logTime + "] Transferred: $" + amount + " -> " + recipient + "\n");
@@ -391,9 +437,21 @@ public class BankingApp {
             }
         });
 
-        profileItem.addActionListener(e -> {
-            JOptionPane.showMessageDialog(frame, "User: " + username + "\nAccount Type: Student Checking", "Profile", JOptionPane.INFORMATION_MESSAGE);
-        });
+        profileItem.addActionListener(e -> JOptionPane.showMessageDialog(frame,
+                "User: " + username + "\nAccount Type: Student Checking",
+                "Profile", JOptionPane.INFORMATION_MESSAGE));
+
+        // ==========================================
+        // CHANGE PASSWORD (Account Menu)
+        // ==========================================
+
+        changePasswordItem.addActionListener(e -> showChangePasswordDialog(frame, borderGray));
+
+        // ==========================================
+        // SETTINGS (Account Menu)
+        // ==========================================
+
+        settingsItem.addActionListener(e -> showSettingsDialog(frame, borderGray, label, welcomeLabel));
 
         // ==========================================
         // LOAD USER DATA ON STARTUP
@@ -409,7 +467,6 @@ public class BankingApp {
         if (file.exists()) {
             try {
                 Scanner sc = new Scanner(file);
-
                 if (sc.hasNextLine()) {
                     String firstLine = sc.nextLine();
                     if (firstLine.startsWith("PASSWORD:")) {
@@ -423,13 +480,10 @@ public class BankingApp {
                         label.setText("Balance: $" + balance);
                     }
                 }
-
                 while (sc.hasNextLine()) {
                     historyLog.append(sc.nextLine() + "\n");
                 }
-
                 sc.close();
-
             } catch (FileNotFoundException e) {
                 System.out.println("File not found, starting fresh.");
             } catch (NumberFormatException e) {
@@ -446,5 +500,252 @@ public class BankingApp {
 
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+    }
+
+    // ==========================================
+    // CHANGE PASSWORD DIALOG
+    // ==========================================
+
+    private void showChangePasswordDialog(JFrame parent, Color borderGray) {
+        JDialog dialog = new JDialog(parent, "Change Password", true);
+        dialog.setSize(380, 290);
+        dialog.setLayout(null);
+        dialog.setResizable(false);
+        dialog.getContentPane().setBackground(new Color(255, 253, 208));
+        dialog.setLocationRelativeTo(parent);
+
+        Font lf = new Font("Segoe UI", Font.BOLD, 14);
+        Font inf = new Font("Segoe UI", Font.PLAIN, 13);
+        Font bf = new Font("Segoe UI", Font.BOLD, 13);
+        Color mp = new Color(106, 13, 173);
+
+        JLabel infoLabel = new JLabel("Change your account password:");
+        infoLabel.setBounds(20, 15, 340, 20);
+        infoLabel.setFont(lf);
+        infoLabel.setForeground(mp);
+        dialog.add(infoLabel);
+
+        JLabel currentLabel = new JLabel("Current Password:");
+        currentLabel.setBounds(20, 50, 160, 20);
+        currentLabel.setFont(lf);
+        dialog.add(currentLabel);
+
+        JPasswordField currentField = new JPasswordField();
+        currentField.setBounds(20, 72, 330, 30);
+        currentField.setFont(inf);
+        currentField.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(borderGray, 1),
+                BorderFactory.createEmptyBorder(5, 8, 5, 8)));
+        dialog.add(currentField);
+
+        JLabel newLabel = new JLabel("New Password:");
+        newLabel.setBounds(20, 112, 160, 20);
+        newLabel.setFont(lf);
+        dialog.add(newLabel);
+
+        JPasswordField newField = new JPasswordField();
+        newField.setBounds(20, 134, 330, 30);
+        newField.setFont(inf);
+        newField.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(borderGray, 1),
+                BorderFactory.createEmptyBorder(5, 8, 5, 8)));
+        dialog.add(newField);
+
+        JLabel confirmLabel = new JLabel("Confirm New Password:");
+        confirmLabel.setBounds(20, 174, 200, 20);
+        confirmLabel.setFont(lf);
+        dialog.add(confirmLabel);
+
+        JPasswordField confirmField = new JPasswordField();
+        confirmField.setBounds(20, 196, 330, 30);
+        confirmField.setFont(inf);
+        confirmField.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(borderGray, 1),
+                BorderFactory.createEmptyBorder(5, 8, 5, 8)));
+        dialog.add(confirmField);
+
+        JButton changeBtn = new JButton("Change Password");
+        changeBtn.setBounds(90, 238, 190, 32);
+        changeBtn.setFont(bf);
+        changeBtn.setBackground(new Color(65, 105, 225));
+        changeBtn.setForeground(Color.WHITE);
+        changeBtn.setFocusPainted(false);
+        dialog.add(changeBtn);
+
+        changeBtn.addActionListener(e -> {
+            String current = new String(currentField.getPassword());
+            String newPass = new String(newField.getPassword());
+            String confirm = new String(confirmField.getPassword());
+
+            if (current.isEmpty() || newPass.isEmpty() || confirm.isEmpty()) {
+                JOptionPane.showMessageDialog(dialog, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (!isCurrentPasswordCorrect(username, LoginScreen.hashPassword(current))) {
+                JOptionPane.showMessageDialog(dialog, "Current password is incorrect.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (!newPass.equals(confirm)) {
+                JOptionPane.showMessageDialog(dialog, "New passwords do not match.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (newPass.length() < 6) {
+                JOptionPane.showMessageDialog(dialog, "Password must be at least 6 characters.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (updatePasswordInCredentials(username, LoginScreen.hashPassword(newPass))) {
+                JOptionPane.showMessageDialog(dialog, "Password changed successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                dialog.dispose();
+            } else {
+                JOptionPane.showMessageDialog(dialog, "Error updating password.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        dialog.setVisible(true);
+    }
+
+    // ==========================================
+    // SETTINGS DIALOG
+    // ==========================================
+
+    private void showSettingsDialog(JFrame parent, Color borderGray, JLabel balanceLabel, JLabel welcomeLabel) {
+        JDialog dialog = new JDialog(parent, "Settings", true);
+        dialog.setSize(380, 240);
+        dialog.setLayout(null);
+        dialog.setResizable(false);
+        dialog.getContentPane().setBackground(new Color(255, 253, 208));
+        dialog.setLocationRelativeTo(parent);
+
+        Font lf = new Font("Segoe UI", Font.BOLD, 14);
+        Font inf = new Font("Segoe UI", Font.PLAIN, 13);
+        Font bf = new Font("Segoe UI", Font.BOLD, 13);
+        Color mp = new Color(106, 13, 173);
+
+        JLabel titleLabel = new JLabel("Account Settings");
+        titleLabel.setBounds(20, 15, 340, 22);
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        titleLabel.setForeground(mp);
+        dialog.add(titleLabel);
+
+        JLabel nameLabel = new JLabel("Display Name:");
+        nameLabel.setBounds(20, 55, 140, 20);
+        nameLabel.setFont(lf);
+        dialog.add(nameLabel);
+
+        JTextField nameField = new JTextField(username);
+        nameField.setBounds(170, 52, 180, 28);
+        nameField.setFont(inf);
+        nameField.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(borderGray, 1),
+                BorderFactory.createEmptyBorder(4, 8, 4, 8)));
+        dialog.add(nameField);
+
+        JLabel typeLabel = new JLabel("Account Type:");
+        typeLabel.setBounds(20, 95, 140, 20);
+        typeLabel.setFont(lf);
+        dialog.add(typeLabel);
+
+        JLabel typeValue = new JLabel("Student Checking");
+        typeValue.setBounds(170, 95, 180, 20);
+        typeValue.setFont(inf);
+        typeValue.setForeground(new Color(51, 51, 51));
+        dialog.add(typeValue);
+
+        JLabel currencyLabel = new JLabel("Currency Symbol:");
+        currencyLabel.setBounds(20, 133, 140, 20);
+        currencyLabel.setFont(lf);
+        dialog.add(currencyLabel);
+
+        String[] currencies = {"$ (USD)", "€ (EUR)", "£ (GBP)", "¥ (JPY)"};
+        JComboBox<String> currencyBox = new JComboBox<>(currencies);
+        currencyBox.setBounds(170, 130, 180, 28);
+        currencyBox.setFont(inf);
+        dialog.add(currencyBox);
+
+        JButton saveSettingsBtn = new JButton("Save Settings");
+        saveSettingsBtn.setBounds(90, 172, 190, 32);
+        saveSettingsBtn.setFont(bf);
+        saveSettingsBtn.setBackground(new Color(34, 139, 34));
+        saveSettingsBtn.setForeground(Color.WHITE);
+        saveSettingsBtn.setFocusPainted(false);
+        dialog.add(saveSettingsBtn);
+
+        saveSettingsBtn.addActionListener(e -> {
+            String newName = nameField.getText().trim();
+            if (newName.isEmpty()) {
+                JOptionPane.showMessageDialog(dialog, "Display name cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            welcomeLabel.setText("Welcome, " + newName);
+
+            String selectedCurrency = (String) currencyBox.getSelectedItem();
+            String symbol = selectedCurrency != null ? selectedCurrency.substring(0, 1) : "$";
+            String currentBalance = balanceLabel.getText().replaceAll("[^0-9.]", "");
+            balanceLabel.setText("Balance: " + symbol + currentBalance);
+
+            JOptionPane.showMessageDialog(dialog, "Settings saved!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            dialog.dispose();
+        });
+
+        dialog.setVisible(true);
+    }
+
+    // ==========================================
+    // HELPER: Verify current password against credentials.txt
+    // ==========================================
+
+    private boolean isCurrentPasswordCorrect(String username, String hashedPassword) {
+        File credFile = new File("credentials.txt");
+        if (!credFile.exists()) return false;
+        try (Scanner sc = new Scanner(credFile)) {
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine().trim();
+                String[] parts = line.split(":", 2);
+                if (parts.length == 2 && parts[0].equals(username) && parts[1].equals(hashedPassword)) {
+                    return true;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            return false;
+        }
+        return false;
+    }
+
+    // ==========================================
+    // HELPER: Update password in credentials.txt
+    // ==========================================
+
+    private boolean updatePasswordInCredentials(String username, String newHashedPassword) {
+        File credFile = new File("credentials.txt");
+        if (!credFile.exists()) return false;
+
+        StringBuilder newContent = new StringBuilder();
+        boolean found = false;
+
+        try (Scanner sc = new Scanner(credFile)) {
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine().trim();
+                if (line.isEmpty()) continue;
+                String[] parts = line.split(":", 2);
+                if (parts.length == 2 && parts[0].equals(username)) {
+                    newContent.append(username).append(":").append(newHashedPassword).append("\n");
+                    found = true;
+                } else {
+                    newContent.append(line).append("\n");
+                }
+            }
+        } catch (FileNotFoundException e) {
+            return false;
+        }
+
+        if (!found) return false;
+
+        try (PrintWriter pw = new PrintWriter(new FileWriter(credFile))) {
+            pw.print(newContent);
+        } catch (IOException e) {
+            return false;
+        }
+
+        return true;
     }
 }
