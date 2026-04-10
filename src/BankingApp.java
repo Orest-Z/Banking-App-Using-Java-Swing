@@ -264,11 +264,11 @@ public class BankingApp {
         frame.add(historyTitle);
 
         JButton sortDateBtn = new JButton("Sort by Date");
-        sortDateBtn.setBounds(260, 190, 100, 25);
+        sortDateBtn.setBounds(200, 190, 125, 25);
         frame.add(sortDateBtn);
 
         JButton sortAmountBtn = new JButton("Sort by Amount");
-        sortAmountBtn.setBounds(370, 190, 120, 25);
+        sortAmountBtn.setBounds(330, 190, 140, 25);
         frame.add(sortAmountBtn);
 
         JTextArea historyLog = new JTextArea();
