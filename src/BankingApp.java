@@ -32,6 +32,34 @@ public class BankingApp {
     Font smallFont = new Font("Segoe UI", Font.PLAIN, 12);
     Font historyFont = new Font("Segoe UI", Font.PLAIN, 11);
 
+    //New method to update the Transaction fHistory Log window
+    private void refreshHistory(JTextArea historyLog) {
+        historyLog.setText("");
+        for (Transaction t : transactions) {
+            historyLog.append(t.toString() + "\n");
+        }
+    }
+    class Transaction {
+        LocalDateTime date;
+        String type;
+        double amount;
+        String details;
+
+        Transaction(LocalDateTime date, String type, double amount, String details) {
+            this.date = date;
+            this.type = type;
+            this.amount = amount;
+            this.details = details;
+        }
+
+        @Override
+        public String toString() {
+            return "[" + date.format(dtf) + "] " + type + ": $" + amount + " " + details;
+        }
+    }
+//New list to store transactions in an Array
+    private java.util.List<Transaction> transactions = new java.util.ArrayList<>();
+
     public BankingApp(String user) {
         this.username = user;
 
@@ -235,6 +263,14 @@ public class BankingApp {
         historyTitle.setForeground(darkIndigo);
         frame.add(historyTitle);
 
+        JButton sortDateBtn = new JButton("Sort by Date");
+        sortDateBtn.setBounds(260, 190, 100, 25);
+        frame.add(sortDateBtn);
+
+        JButton sortAmountBtn = new JButton("Sort by Amount");
+        sortAmountBtn.setBounds(370, 190, 120, 25);
+        frame.add(sortAmountBtn);
+
         JTextArea historyLog = new JTextArea();
         historyLog.setEditable(false);
         historyLog.setFont(historyFont);
@@ -258,7 +294,8 @@ public class BankingApp {
                 }
                 balance += amount;
                 String logTime = LocalDateTime.now().format(dtf);
-                historyLog.append("[" + logTime + "] Deposited: $" + amount + "\n");
+                transactions.add(new Transaction(LocalDateTime.now(), "Deposited", amount, ""));
+                refreshHistory(historyLog);
                 label.setText("Balance: $" + balance);
                 input.setText("");
             } catch (Exception ex) {
@@ -280,7 +317,8 @@ public class BankingApp {
                     }
                     balance -= amount;
                     String logTime = LocalDateTime.now().format(dtf);
-                    historyLog.append("[" + logTime + "] Withdrew:  $" + amount + "\n");
+                    transactions.add(new Transaction(LocalDateTime.now(), "Withdrew", amount, ""));
+                    refreshHistory(historyLog);
                     label.setText("Balance: $" + balance);
                 } else {
                     JOptionPane.showMessageDialog(frame, "Balance is too low!");
@@ -332,7 +370,8 @@ public class BankingApp {
 
                 balance -= amount;
                 String logTime = LocalDateTime.now().format(dtf);
-                historyLog.append("[" + logTime + "] Transferred: $" + amount + " -> " + recipient + "\n");
+                transactions.add(new Transaction(LocalDateTime.now(), "Transferred", amount, "-> " + recipient));
+                refreshHistory(historyLog);
                 label.setText("Balance: $" + balance);
                 input.setText("");
                 recipientInput.setText("");
@@ -340,6 +379,22 @@ public class BankingApp {
                 JOptionPane.showMessageDialog(frame, "Please enter a valid amount!");
             }
         });
+
+
+        //===========================================
+        //SORTING BUTTONS LOGIC
+        //==========================================
+        sortDateBtn.addActionListener(e -> {
+            transactions.sort((a, b) -> b.date.compareTo(a.date)); // newest first
+            refreshHistory(historyLog);
+        });
+
+        sortAmountBtn.addActionListener(e -> {
+            transactions.sort((a, b) -> Double.compare(b.amount, a.amount)); // highest first
+            refreshHistory(historyLog);
+        });
+        //===========================================
+
 
         // ==========================================
         // MENU BAR ACTIONS
